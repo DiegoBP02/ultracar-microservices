@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  postgres-ultracar:
+    image: postgres:latest
+    container_name: psql-ultracar
+    environment:
+      POSTGRES_DB: ultracardb
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    volumes:
+      - postgres-ultracar:/data/postgres
+    expose:
+      - "5430"
+    ports:
+      - "5430:5430"
+    command: -p 5430
+    restart: always
+
+volumes:
+  postgres-ultracar:
