@@ -2,7 +2,6 @@ package com.example.Ultracar.integrationTests;
 
 import com.example.Ultracar.DataLoader;
 import com.example.Ultracar.enums.Situation;
-import com.example.Ultracar.repositories.ClientRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,8 +43,6 @@ class SituationIntegrationTest {
         postgreSQLContainer.start();
     }
 
-    @Autowired
-    private ClientRepository clientRepository;
     @Autowired
     protected MockMvc mockMvc;
     @Autowired

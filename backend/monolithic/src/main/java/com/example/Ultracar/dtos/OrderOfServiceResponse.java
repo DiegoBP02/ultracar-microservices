@@ -27,11 +27,11 @@ public class OrderOfServiceResponse {
     private List<ServiceResponse> observations;
 
     @Builder
-    public OrderOfServiceResponse(OrderOfService orderOfService) {
+    public OrderOfServiceResponse(OrderOfService orderOfService, ClientResponse clientResponse) {
         this.id= orderOfService.getId();
         this.createdAt = orderOfService.getCreatedAt();
         this.diagnosticId = orderOfService.getDiagnosticId();
-        this.clientResponse = mapClientToClientResponse(orderOfService.getClient());
+        this.clientResponse = clientResponse;
         this.vehicleResponse = mapVehicleToVehicleResponse(orderOfService.getVehicle());
         this.specificServices = orderOfService.getSpecificServices() != null
                 ? mapEntitiesToServiceResponses(
@@ -68,16 +68,6 @@ public class OrderOfServiceResponse {
                 .year(vehicle.getYear())
                 .licensePlate(vehicle.getLicensePlate())
                 .accessories(vehicle.getAccessories())
-                .build();
-    }
-
-    private ClientResponse mapClientToClientResponse(Client client) {
-        return ClientResponse.builder()
-                .name(client.getName())
-                .phone(client.getPhone())
-                .email(client.getEmail())
-                .cpf(client.getCpf())
-                .address(client.getAddress())
                 .build();
     }
 

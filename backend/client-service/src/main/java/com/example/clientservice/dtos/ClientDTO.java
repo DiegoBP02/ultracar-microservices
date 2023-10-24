@@ -1,4 +1,4 @@
-package com.example.Ultracar.dtos;
+package com.example.clientservice.dtos;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

@@ -1,5 +1,6 @@
 package com.example.Ultracar.services;
 
+import com.example.Ultracar.dtos.ClientResponse;
 import com.example.Ultracar.dtos.OrderOfServiceDTO;
 import com.example.Ultracar.dtos.OrderOfServiceResponse;
 import com.example.Ultracar.entities.*;
@@ -9,6 +10,8 @@ import com.example.Ultracar.repositories.OrderOfServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.security.SecureRandom;
 import java.time.Instant;
@@ -23,9 +26,6 @@ public class OrderOfServiceService {
     private OrderOfServiceRepository orderOfServiceRepository;
 
     @Autowired
-    private ClientService clientService;
-
-    @Autowired
     private VehicleService vehicleService;
 
     @Autowired
@@ -37,8 +37,11 @@ public class OrderOfServiceService {
     @Autowired
     private ObservationService observationService;
 
+    @Autowired
+    private ClientService clientService;
+
     public OrderOfServiceResponse create(OrderOfServiceDTO generalServiceDTO) {
-        Client client = clientService.findByCpf(generalServiceDTO.getClientCpf());
+        ClientResponse clientResponse = clientService.findClientByCpf(generalServiceDTO.getClientCpf());
         Vehicle vehicle = vehicleService.findById(generalServiceDTO.getVehicleId());
         List<SpecificService> specificServices = (generalServiceDTO.getSpecificServiceIds() != null)
                 ? specificServiceService.findAllByIdIn(generalServiceDTO.getSpecificServiceIds())
@@ -53,7 +56,7 @@ public class OrderOfServiceService {
             OrderOfService orderOfService = OrderOfService.builder()
                     .createdAt(Instant.now())
                     .diagnosticId(randomValue())
-                    .client(client)
+                    .clientId(clientResponse.getId())
                     .vehicle(vehicle)
                     .specificServices(specificServices.isEmpty() ? null : specificServices)
                     .generalServices(generalServices.isEmpty() ? null : generalServices)
@@ -61,7 +64,7 @@ public class OrderOfServiceService {
                     .build();
 
             orderOfServiceRepository.save(orderOfService);
-            return new OrderOfServiceResponse(orderOfService);
+            return new OrderOfServiceResponse(orderOfService, clientResponse);
         } catch (DataIntegrityViolationException e) {
             throw new UniqueConstraintViolationException();
         }
@@ -73,10 +76,9 @@ public class OrderOfServiceService {
         return String.format("%05d", num);
     }
 
-    public OrderOfServiceResponse findById(UUID id) {
-        OrderOfService orderOfService = orderOfServiceRepository.findById(id)
+    public OrderOfService findById(UUID id) {
+        return orderOfServiceRepository.findById(id)
                 .orElseThrow(() -> new
                         ResourceNotFoundException("OrderOfService not found. ID: " + id));
-        return new OrderOfServiceResponse(orderOfService);
     }
 }

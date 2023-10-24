@@ -2,7 +2,6 @@ package com.example.Ultracar.controller;
 
 import com.example.Ultracar.dtos.VehicleDTO;
 import com.example.Ultracar.dtos.VehicleResponseWithClientCpf;
-import com.example.Ultracar.entities.Client;
 import com.example.Ultracar.entities.Vehicle;
 import com.example.Ultracar.services.VehicleService;
 import jakarta.validation.Valid;
@@ -12,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -31,6 +31,14 @@ public class VehicleController {
 
         return ResponseEntity.created(uri).body(vehicle);
     }
+
+    @GetMapping(value = "/clientCpf/{clientCpf}")
+    public ResponseEntity<List<Vehicle>> findAllVehicleByClientCpf
+            (@PathVariable("clientCpf") String clientCpf) {
+        List<Vehicle> vehicles = vehicleService.findAllByClientCpf(clientCpf);
+        return ResponseEntity.ok().body(vehicles);
+    }
+
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<VehicleResponseWithClientCpf> findById(@PathVariable("id") UUID id) {

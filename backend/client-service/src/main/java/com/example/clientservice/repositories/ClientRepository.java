@@ -1,6 +1,6 @@
-package com.example.Ultracar.repositories;
+package com.example.clientservice.repositories;
 
-import com.example.Ultracar.entities.Client;
+import com.example.clientservice.entities.Client;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

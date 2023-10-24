@@ -1,9 +1,8 @@
-package com.example.Ultracar.controller;
+package com.example.clientservice.controllers;
 
-import com.example.Ultracar.dtos.ClientDTO;
-import com.example.Ultracar.entities.Client;
-import com.example.Ultracar.entities.Vehicle;
-import com.example.Ultracar.services.ClientService;
+import com.example.clientservice.dtos.ClientDTO;
+import com.example.clientservice.entities.Client;
+import com.example.clientservice.services.ClientService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
-import java.util.List;
 
 @RestController
 @RequestMapping(value = "/client")
@@ -35,12 +33,6 @@ public class ClientController {
     public ResponseEntity<Client> findByCpf(@PathVariable("cpf") String cpf) {
         Client client = clientService.findByCpf(cpf);
         return ResponseEntity.ok().body(client);
-    }
-
-    @GetMapping("/{cpf}/cars")
-    public ResponseEntity<List<Vehicle>> findVehiclesByClientCpf(@PathVariable("cpf") String cpf) {
-        List<Vehicle> cars = clientService.findVehiclesByClientCpf(cpf);
-        return ResponseEntity.ok(cars);
     }
 
 }

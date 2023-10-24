@@ -31,8 +31,6 @@ public class Vehicle {
     @CollectionTable(name = "car_accessories", joinColumns = @JoinColumn(name = "car_id"))
     @Enumerated(EnumType.STRING)
     private List<Accessory> accessories;
-    @JsonIgnore
-    @ManyToOne
-    @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
+    @Column(nullable = false, name = "client_cpf")
+    private String clientCpf;
 }

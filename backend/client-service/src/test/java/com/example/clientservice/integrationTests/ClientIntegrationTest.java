@@ -1,12 +1,9 @@
-package com.example.Ultracar.integrationTests;
+package com.example.clientservice.integrationTests;
 
-import com.example.Ultracar.DataLoader;
-import com.example.Ultracar.dtos.ClientDTO;
-import com.example.Ultracar.entities.Client;
-import com.example.Ultracar.entities.Vehicle;
-import com.example.Ultracar.enums.Accessory;
-import com.example.Ultracar.repositories.ClientRepository;
-import com.example.Ultracar.repositories.VehicleRepository;
+import com.example.clientservice.DataLoader;
+import com.example.clientservice.dtos.ClientDTO;
+import com.example.clientservice.entities.Client;
+import com.example.clientservice.repositories.ClientRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -27,14 +24,13 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 import java.util.Collections;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @SpringBootTest
 @AutoConfigureMockMvc
 @Testcontainers
-class ClientIntegrationTest  {
+class ClientIntegrationTest {
 
     private static final String PATH = "/client";
 
@@ -54,8 +50,6 @@ class ClientIntegrationTest  {
 
     @Autowired
     private ClientRepository clientRepository;
-    @Autowired
-    private VehicleRepository vehicleRepository;
     @Autowired
     protected MockMvc mockMvc;
     @Autowired
@@ -77,20 +71,9 @@ class ClientIntegrationTest  {
             .phone("123")
             .address("address")
             .build();
-    private Vehicle vehicle = Vehicle.builder()
-            .licensePlate("123")
-            .year("1234")
-            .model("model")
-            .accessories(Collections.singletonList(Accessory.AIRBAG))
-            .client(client)
-            .build();
 
     private Client insertClient() {
         return clientRepository.save(client);
-    }
-
-    private void insertVehicle() {
-        vehicleRepository.save(vehicle);
     }
 
     private MockHttpServletRequestBuilder mockPostRequest
@@ -110,6 +93,7 @@ class ClientIntegrationTest  {
     void beforeEach() {
         clientRepository.deleteAll();
     }
+
     @Test
     void shouldCreateClient() throws Exception {
         mockMvc.perform(mockPostRequest(clientDTO))
@@ -134,18 +118,6 @@ class ClientIntegrationTest  {
                 .andExpect(jsonPath("$.email").value(clientDTO.getEmail()))
                 .andExpect(jsonPath("$.phone").value(clientDTO.getPhone()))
                 .andExpect(jsonPath("$.address").value(clientDTO.getAddress()));
-    }
-
-    @Test
-    void shouldFindVehiclesByClientCpf() throws Exception{
-        insertClient();
-        insertVehicle();
-
-        mockMvc.perform(mockGetRequest(client.getCpf()))
-                .andExpect(status().isOk())
-                .andExpect(jsonPath("$.vehicles[0].licensePlate").value(vehicle.getLicensePlate()))
-                .andExpect(jsonPath("$.vehicles[0].year").value(vehicle.getYear()))
-                .andExpect(jsonPath("$.vehicles[0].model").value(vehicle.getModel()));
     }
 
 }

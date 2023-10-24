@@ -24,9 +24,8 @@ public class OrderOfService {
     private Instant createdAt;
     @Column(nullable = false)
     private String diagnosticId;
-    @ManyToOne
     @JoinColumn(name = "client_id", nullable = false)
-    private Client client;
+    private UUID clientId;
     @ManyToOne
     @JoinColumn(name = "vehicle_id", nullable = false)
     private Vehicle vehicle;

@@ -2,10 +2,8 @@ package com.example.Ultracar.integrationTests;
 
 import com.example.Ultracar.DataLoader;
 import com.example.Ultracar.dtos.VehicleDTO;
-import com.example.Ultracar.entities.Client;
 import com.example.Ultracar.entities.Vehicle;
 import com.example.Ultracar.enums.Accessory;
-import com.example.Ultracar.repositories.ClientRepository;
 import com.example.Ultracar.repositories.VehicleRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,16 +13,20 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Collections;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -55,44 +57,29 @@ class VehicleIntegrationTest {
     @Autowired
     private VehicleRepository vehicleRepository;
     @Autowired
-    private ClientRepository clientRepository;
-    @Autowired
     protected MockMvc mockMvc;
     @Autowired
     protected ObjectMapper objectMapper;
     @MockBean
     private DataLoader dataLoader;
 
-    private Client client = Client.builder()
-            .name("client")
-            .email("email")
-            .cpf("123")
-            .phone("123")
-            .address("address")
-            .build();
+    private String clientCpf = "11111111111";
     private Vehicle vehicle = Vehicle.builder()
             .licensePlate("123")
             .year("1234")
             .model("model")
             .accessories(Collections.singletonList(Accessory.AIRBAG))
-            .client(client)
+            .clientCpf(clientCpf)
             .build();
     private VehicleDTO vehicleDTO = VehicleDTO.builder()
             .licensePlate("123")
             .year("1234")
             .model("model")
             .accessories(Collections.singletonList(Accessory.AIRBAG))
-            .clientCpf(client.getCpf())
+            .clientCpf(clientCpf)
             .build();
 
-    private Client insertClient() {
-        return clientRepository.findByCpf(client.getCpf())
-                .orElseGet(()->clientRepository.save(client));
-    }
-
     private void insertVehicle() {
-        Client client = insertClient();
-        vehicle.setClient(client);
         vehicleRepository.save(vehicle);
     }
 
@@ -111,21 +98,31 @@ class VehicleIntegrationTest {
 
     @BeforeEach
     void beforeEach() {
-        clientRepository.deleteAll();
         vehicleRepository.deleteAll();
     }
 
     @Test
     void shouldCreateVehicle() throws Exception {
-        clientRepository.save(client);
-
         mockMvc.perform(mockPostRequest(vehicleDTO))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.licensePlate").value(vehicleDTO.getLicensePlate()))
                 .andExpect(jsonPath("$.year").value(vehicleDTO.getYear()))
-                .andExpect(jsonPath("$.model").value(vehicleDTO.getModel()));
+                .andExpect(jsonPath("$.model").value(vehicleDTO.getModel()))
+                .andExpect(jsonPath("$.clientCpf").value(clientCpf));
 
         assertEquals(1, vehicleRepository.findAll().size());
+    }
+
+    @Test
+    void shouldFindAllByClientCpf() throws Exception {
+        insertVehicle();
+
+        mockMvc.perform(mockGetRequest("clientCpf/" + clientCpf))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].licensePlate").value(vehicleDTO.getLicensePlate()))
+                .andExpect(jsonPath("$[0].year").value(vehicleDTO.getYear()))
+                .andExpect(jsonPath("$[0].model").value(vehicleDTO.getModel()))
+                .andExpect(jsonPath("$[0].clientCpf").value(clientCpf));
     }
 
     @Test
@@ -136,7 +133,8 @@ class VehicleIntegrationTest {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.licensePlate").value(vehicleDTO.getLicensePlate()))
                 .andExpect(jsonPath("$.year").value(vehicleDTO.getYear()))
-                .andExpect(jsonPath("$.model").value(vehicleDTO.getModel()));
+                .andExpect(jsonPath("$.model").value(vehicleDTO.getModel()))
+                .andExpect(jsonPath("$.clientCpf").value(clientCpf));
     }
 
 }

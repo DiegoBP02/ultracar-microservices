@@ -17,8 +17,6 @@ import java.util.List;
 public class DataLoader implements CommandLineRunner {
 
     @Autowired
-    private ClientRepository clientRepository;
-    @Autowired
     private VehicleRepository vehicleRepository;
     @Autowired
     private ObservationRepository observationRepository;
@@ -29,13 +27,10 @@ public class DataLoader implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        Client client1 = createClient1();
-        Client client2 = createClient2();
-        Client client3 = createClient3();
-        createVehicle1(client1);
-        createVehicle2(client2);
-        createVehicle3(client3);
-        createVehicle4(client1);
+        createVehicle1();
+        createVehicle2();
+        createVehicle3();
+        createVehicle4();
         createObservations();
         createSpecificServices();
         createGeneralServices();
@@ -112,9 +107,9 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("GeneralService saved: " + generalService1.getId());
     }
 
-    private void createVehicle1(Client client1) {
+    private void createVehicle1() {
         Vehicle vehicle1 = Vehicle.builder()
-                .client(client1)
+                .clientCpf("11111111111")
                 .licensePlate("GHG-1234")
                 .model("Ford Fiesta")
                 .year("2019")
@@ -124,9 +119,9 @@ public class DataLoader implements CommandLineRunner {
         System.out.println("Vehicle saved: " + savedVehicle.getId());
     }
 
-    private void createVehicle2(Client client2) {
+    private void createVehicle2() {
         Vehicle vehicle2 = Vehicle.builder()
-                .client(client2)
+                .clientCpf("22222222222")
                 .licensePlate("GHG-1235")
                 .model("Volkswagen Gol")
                 .year("2018")
@@ -135,9 +130,9 @@ public class DataLoader implements CommandLineRunner {
         vehicleRepository.save(vehicle2);
     }
 
-    private void createVehicle3(Client client3) {
+    private void createVehicle3() {
         Vehicle vehicle3 = Vehicle.builder()
-                .client(client3)
+                .clientCpf("333333333")
                 .licensePlate("GHG-1236")
                 .model("Ford Fiesta")
                 .year("2019")
@@ -146,9 +141,9 @@ public class DataLoader implements CommandLineRunner {
         vehicleRepository.save(vehicle3);
     }
 
-    private void createVehicle4(Client client1) {
+    private void createVehicle4() {
         Vehicle vehicle4 = Vehicle.builder()
-                .client(client1)
+                .clientCpf("11111111111")
                 .licensePlate("GHG-1237")
                 .model("Volkswagen Gol")
                 .year("2018")
@@ -157,38 +152,4 @@ public class DataLoader implements CommandLineRunner {
         vehicleRepository.save(vehicle4);
     }
 
-    private Client createClient1() {
-        Client client1 = Client.builder()
-                .name("Cliente 1")
-                .phone("111111111")
-                .email("cliente1@email.com")
-                .cpf("11111111111")
-                .address("Endereço 1")
-                .build();
-        Client savedClient = clientRepository.save(client1);
-        System.out.println("Client saved: " + savedClient.getId());
-        return savedClient;
-    }
-
-    private Client createClient2() {
-        Client client2 = Client.builder()
-                .name("Cliente 2")
-                .phone("222222222")
-                .email("cliente2@email.com")
-                .cpf("22222222222")
-                .address("Endereço 2")
-                .build();
-        return clientRepository.save(client2);
-    }
-
-    private Client createClient3() {
-        Client client3 = Client.builder()
-                .name("Cliente 3")
-                .phone("333333333")
-                .email("cliente3@email.com")
-                .cpf("33333333333")
-                .address("Endereço 3")
-                .build();
-        return clientRepository.save(client3);
-    }
 }

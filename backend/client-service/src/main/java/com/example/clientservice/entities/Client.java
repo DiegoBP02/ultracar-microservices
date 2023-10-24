@@ -1,4 +1,4 @@
-package com.example.Ultracar.entities;
+package com.example.clientservice.entities;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,6 +29,7 @@ public class Client {
     private String phone;
     @Column(nullable = false)
     private String address;
-    @OneToMany(mappedBy = "client", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private List<Vehicle> vehicles;
+    @ElementCollection
+    @Column(nullable = true, name = "vehicle_ids")
+    private List<UUID> vehicleIds;
 }
