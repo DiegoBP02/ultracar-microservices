@@ -2,7 +2,6 @@ package com.example.Ultracar;
 
 import com.example.Ultracar.entities.*;
 import com.example.Ultracar.enums.Accessory;
-import com.example.Ultracar.enums.Role;
 import com.example.Ultracar.enums.Situation;
 import com.example.Ultracar.repositories.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,8 +17,6 @@ import java.util.List;
 public class DataLoader implements CommandLineRunner {
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private ClientRepository clientRepository;
     @Autowired
     private VehicleRepository vehicleRepository;
@@ -29,12 +26,9 @@ public class DataLoader implements CommandLineRunner {
     private SpecificServiceRepository specificServiceRepository;
     @Autowired
     private GeneralServiceRepository generalServiceRepository;
-    @Autowired
-    private PasswordEncoder passwordEncoder;
 
     @Override
     public void run(String... args) throws Exception {
-        createAdmin();
         Client client1 = createClient1();
         Client client2 = createClient2();
         Client client3 = createClient3();
@@ -196,15 +190,5 @@ public class DataLoader implements CommandLineRunner {
                 .address("Endereço 3")
                 .build();
         return clientRepository.save(client3);
-    }
-
-    private void createAdmin() {
-        User admin = User.builder()
-                .name("admin")
-                .password(passwordEncoder.encode("senha"))
-                .role(Role.ADMIN)
-                .build();
-        User savedAdmin = userRepository.save(admin);
-        System.out.println("Admin saved: " + savedAdmin.getId());
     }
 }

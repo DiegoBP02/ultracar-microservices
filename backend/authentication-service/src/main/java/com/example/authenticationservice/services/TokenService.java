@@ -1,8 +1,8 @@
-package com.example.Ultracar.services;
+package com.example.authenticationservice.services;
 
 import com.auth0.jwt.JWT;
 import com.auth0.jwt.algorithms.Algorithm;
-import com.example.Ultracar.entities.User;
+import com.example.authenticationservice.entities.User;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 

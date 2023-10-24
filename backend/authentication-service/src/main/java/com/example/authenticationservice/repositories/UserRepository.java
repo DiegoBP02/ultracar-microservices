@@ -1,6 +1,6 @@
-package com.example.Ultracar.repositories;
+package com.example.authenticationservice.repositories;
 
-import com.example.Ultracar.entities.User;
+import com.example.authenticationservice.entities.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

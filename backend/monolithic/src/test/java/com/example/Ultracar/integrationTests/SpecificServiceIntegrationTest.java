@@ -3,11 +3,8 @@ package com.example.Ultracar.integrationTests;
 import com.example.Ultracar.DataLoader;
 import com.example.Ultracar.dtos.SpecificServiceDTO;
 import com.example.Ultracar.entities.SpecificService;
-import com.example.Ultracar.entities.User;
-import com.example.Ultracar.enums.Role;
 import com.example.Ultracar.enums.Situation;
 import com.example.Ultracar.repositories.SpecificServiceRepository;
-import com.example.Ultracar.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,8 +49,6 @@ class SpecificServiceIntegrationTest {
     }
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private SpecificServiceRepository specificServiceRepository;
     @Autowired
     protected MockMvc mockMvc;
@@ -62,11 +57,6 @@ class SpecificServiceIntegrationTest {
     @MockBean
     private DataLoader dataLoader;
 
-    private User user = User.builder()
-            .name("user")
-            .password("password")
-            .role(Role.EMPLOYEE)
-            .build();
     private SpecificService specificService = SpecificService.builder()
             .situation(Situation.COMPLETO)
             .serviceName("serviceName")
@@ -77,11 +67,6 @@ class SpecificServiceIntegrationTest {
             .serviceName("serviceName")
             .vehicleModel("model")
             .build();
-
-    private User setupUser() {
-        return userRepository.findByName(user.getName())
-                .orElseGet(() -> userRepository.save(user));
-    }
 
     private void insertSpecificService() {
         specificServiceRepository.save(specificService);
@@ -102,12 +87,11 @@ class SpecificServiceIntegrationTest {
 
     @BeforeEach
     void beforeEach() {
-        userRepository.deleteAll();
         specificServiceRepository.deleteAll();
     }
     @Test
     void shouldCreateSpecificService() throws Exception {
-        mockMvc.perform(mockPostRequest(specificServiceDTO).with(user(setupUser())))
+        mockMvc.perform(mockPostRequest(specificServiceDTO))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.situation").value(specificServiceDTO.getSituation().toString()))
                 .andExpect(jsonPath("$.serviceName").value(specificServiceDTO.getServiceName()));
@@ -119,7 +103,7 @@ class SpecificServiceIntegrationTest {
     void shouldFindAll() throws Exception {
         insertSpecificService();
 
-        mockMvc.perform(mockGetRequest(specificService.getVehicleModel()).with(user(setupUser())))
+        mockMvc.perform(mockGetRequest(specificService.getVehicleModel()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].situation").value(specificServiceDTO.getSituation().toString()))
                 .andExpect(jsonPath("$[0].serviceName").value(specificServiceDTO.getServiceName()));

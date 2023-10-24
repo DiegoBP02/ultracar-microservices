@@ -1,6 +1,6 @@
-package com.example.Ultracar.entities;
+package com.example.authenticationservice.entities;
 
-import com.example.Ultracar.enums.Role;
+import com.example.authenticationservice.enums.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

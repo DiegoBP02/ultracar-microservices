@@ -1,11 +1,11 @@
-package com.example.Ultracar.integrationTests;
+package com.example.authenticationservice.integrationTests;
 
-import com.example.Ultracar.DataLoader;
-import com.example.Ultracar.dtos.LoginDTO;
-import com.example.Ultracar.dtos.RegisterDTO;
-import com.example.Ultracar.entities.User;
-import com.example.Ultracar.enums.Role;
-import com.example.Ultracar.repositories.UserRepository;
+import com.example.authenticationservice.DataLoader;
+import com.example.authenticationservice.dtos.LoginDTO;
+import com.example.authenticationservice.dtos.RegisterDTO;
+import com.example.authenticationservice.entities.User;
+import com.example.authenticationservice.enums.Role;
+import com.example.authenticationservice.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

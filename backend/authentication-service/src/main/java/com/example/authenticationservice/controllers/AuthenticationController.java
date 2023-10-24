@@ -1,8 +1,8 @@
-package com.example.Ultracar.controller;
+package com.example.authenticationservice.controllers;
 
-import com.example.Ultracar.dtos.LoginDTO;
-import com.example.Ultracar.dtos.RegisterDTO;
-import com.example.Ultracar.services.AuthenticationService;
+import com.example.authenticationservice.dtos.LoginDTO;
+import com.example.authenticationservice.dtos.RegisterDTO;
+import com.example.authenticationservice.services.AuthenticationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;

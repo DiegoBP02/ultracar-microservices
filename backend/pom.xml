@@ -10,8 +10,9 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>client-service</module>
         <module>monolithic</module>
+        <module>authentication-service</module>
+        <module>gateway</module>
     </modules>
 
     <properties>

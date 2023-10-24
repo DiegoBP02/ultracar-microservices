@@ -1,11 +1,11 @@
-package com.example.Ultracar.services;
+package com.example.authenticationservice.services;
 
 
-import com.example.Ultracar.dtos.LoginDTO;
-import com.example.Ultracar.dtos.RegisterDTO;
-import com.example.Ultracar.entities.User;
-import com.example.Ultracar.exceptions.UniqueConstraintViolationException;
-import com.example.Ultracar.repositories.UserRepository;
+import com.example.authenticationservice.dtos.LoginDTO;
+import com.example.authenticationservice.dtos.RegisterDTO;
+import com.example.authenticationservice.entities.User;
+import com.example.authenticationservice.exceptions.UniqueConstraintViolationException;
+import com.example.authenticationservice.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.dao.DataIntegrityViolationException;

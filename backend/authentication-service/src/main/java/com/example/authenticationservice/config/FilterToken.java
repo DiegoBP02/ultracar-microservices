@@ -1,8 +1,8 @@
-package com.example.Ultracar.config;
+package com.example.authenticationservice.config;
 
-import com.example.Ultracar.entities.User;
-import com.example.Ultracar.repositories.UserRepository;
-import com.example.Ultracar.services.TokenService;
+import com.example.authenticationservice.entities.User;
+import com.example.authenticationservice.repositories.UserRepository;
+import com.example.authenticationservice.services.TokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

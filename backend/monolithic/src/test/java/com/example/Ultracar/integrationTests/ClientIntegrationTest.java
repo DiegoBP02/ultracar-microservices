@@ -3,12 +3,9 @@ package com.example.Ultracar.integrationTests;
 import com.example.Ultracar.DataLoader;
 import com.example.Ultracar.dtos.ClientDTO;
 import com.example.Ultracar.entities.Client;
-import com.example.Ultracar.entities.User;
 import com.example.Ultracar.entities.Vehicle;
 import com.example.Ultracar.enums.Accessory;
-import com.example.Ultracar.enums.Role;
 import com.example.Ultracar.repositories.ClientRepository;
-import com.example.Ultracar.repositories.UserRepository;
 import com.example.Ultracar.repositories.VehicleRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,8 +53,6 @@ class ClientIntegrationTest  {
     }
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private ClientRepository clientRepository;
     @Autowired
     private VehicleRepository vehicleRepository;
@@ -68,11 +63,6 @@ class ClientIntegrationTest  {
     @MockBean
     private DataLoader dataLoader;
 
-    private User user = User.builder()
-            .name("user")
-            .password("password")
-            .role(Role.EMPLOYEE)
-            .build();
     private Client client = Client.builder()
             .name("client")
             .email("email")
@@ -94,11 +84,6 @@ class ClientIntegrationTest  {
             .accessories(Collections.singletonList(Accessory.AIRBAG))
             .client(client)
             .build();
-
-    private User setupUser() {
-        return userRepository.findByName(user.getName())
-                .orElseGet(() -> userRepository.save(user));
-    }
 
     private Client insertClient() {
         return clientRepository.save(client);
@@ -123,12 +108,11 @@ class ClientIntegrationTest  {
 
     @BeforeEach
     void beforeEach() {
-        userRepository.deleteAll();
         clientRepository.deleteAll();
     }
     @Test
     void shouldCreateClient() throws Exception {
-        mockMvc.perform(mockPostRequest(clientDTO).with(user(setupUser())))
+        mockMvc.perform(mockPostRequest(clientDTO))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.name").value(clientDTO.getName()))
                 .andExpect(jsonPath("$.cpf").value(clientDTO.getCpf()))
@@ -143,7 +127,7 @@ class ClientIntegrationTest  {
     void shouldFindByCpf() throws Exception {
         insertClient();
 
-        mockMvc.perform(mockGetRequest(client.getCpf()).with(user(setupUser())))
+        mockMvc.perform(mockGetRequest(client.getCpf()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value(clientDTO.getName()))
                 .andExpect(jsonPath("$.cpf").value(clientDTO.getCpf()))
@@ -157,7 +141,7 @@ class ClientIntegrationTest  {
         insertClient();
         insertVehicle();
 
-        mockMvc.perform(mockGetRequest(client.getCpf()).with(user(setupUser())))
+        mockMvc.perform(mockGetRequest(client.getCpf()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.vehicles[0].licensePlate").value(vehicle.getLicensePlate()))
                 .andExpect(jsonPath("$.vehicles[0].year").value(vehicle.getYear()))

@@ -4,7 +4,6 @@ import com.example.Ultracar.DataLoader;
 import com.example.Ultracar.dtos.OrderOfServiceDTO;
 import com.example.Ultracar.entities.*;
 import com.example.Ultracar.enums.Accessory;
-import com.example.Ultracar.enums.Role;
 import com.example.Ultracar.enums.Situation;
 import com.example.Ultracar.repositories.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -52,8 +51,6 @@ class OrderOfServiceIntegrationTest {
     }
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private VehicleRepository vehicleRepository;
     @Autowired
     private ClientRepository clientRepository;
@@ -72,11 +69,6 @@ class OrderOfServiceIntegrationTest {
     @MockBean
     private DataLoader dataLoader;
 
-    private User user = User.builder()
-            .name("user")
-            .password("password")
-            .role(Role.EMPLOYEE)
-            .build();
     private Client client = Client.builder()
             .name("client")
             .email("email")
@@ -113,11 +105,6 @@ class OrderOfServiceIntegrationTest {
             .createdAt(Instant.now())
             .diagnosticId("12345")
             .build();
-
-    private User setupUser() {
-        return userRepository.findByName(user.getName())
-                .orElseGet(() -> userRepository.save(user));
-    }
 
     private void insertClient() {
         clientRepository.save(client);
@@ -164,7 +151,6 @@ class OrderOfServiceIntegrationTest {
     @BeforeEach
     void beforeEach() {
         orderOfServiceRepository.deleteAll();
-        userRepository.deleteAll();
         vehicleRepository.deleteAll();
         clientRepository.deleteAll();
         observationRepository.deleteAll();
@@ -186,7 +172,7 @@ class OrderOfServiceIntegrationTest {
                 .generalServiceIds(Collections.singletonList(generalService.getId()))
                 .build();
 
-        mockMvc.perform(mockPostRequest(orderOfServiceDTO).with(user(setupUser())))
+        mockMvc.perform(mockPostRequest(orderOfServiceDTO))
                 .andExpect(status().isCreated());
 
         assertEquals(1, orderOfServiceRepository.findAll().size());
@@ -196,7 +182,7 @@ class OrderOfServiceIntegrationTest {
     void shouldFindById() throws Exception {
         insertOrderOfService();
 
-        mockMvc.perform(mockGetRequest(orderOfService.getId().toString()).with(user(setupUser())))
+        mockMvc.perform(mockGetRequest(orderOfService.getId().toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.createdAt").isNotEmpty())
                 .andExpect(jsonPath("$.diagnosticId").value(orderOfService.getDiagnosticId()))

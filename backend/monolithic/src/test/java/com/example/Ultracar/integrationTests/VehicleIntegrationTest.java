@@ -3,12 +3,9 @@ package com.example.Ultracar.integrationTests;
 import com.example.Ultracar.DataLoader;
 import com.example.Ultracar.dtos.VehicleDTO;
 import com.example.Ultracar.entities.Client;
-import com.example.Ultracar.entities.User;
 import com.example.Ultracar.entities.Vehicle;
 import com.example.Ultracar.enums.Accessory;
-import com.example.Ultracar.enums.Role;
 import com.example.Ultracar.repositories.ClientRepository;
-import com.example.Ultracar.repositories.UserRepository;
 import com.example.Ultracar.repositories.VehicleRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,8 +53,6 @@ class VehicleIntegrationTest {
     }
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private VehicleRepository vehicleRepository;
     @Autowired
     private ClientRepository clientRepository;
@@ -68,11 +63,6 @@ class VehicleIntegrationTest {
     @MockBean
     private DataLoader dataLoader;
 
-    private User user = User.builder()
-            .name("user")
-            .password("password")
-            .role(Role.EMPLOYEE)
-            .build();
     private Client client = Client.builder()
             .name("client")
             .email("email")
@@ -94,11 +84,6 @@ class VehicleIntegrationTest {
             .accessories(Collections.singletonList(Accessory.AIRBAG))
             .clientCpf(client.getCpf())
             .build();
-
-    private User setupUser() {
-        return userRepository.findByName(user.getName())
-                .orElseGet(() -> userRepository.save(user));
-    }
 
     private Client insertClient() {
         return clientRepository.findByCpf(client.getCpf())
@@ -126,7 +111,6 @@ class VehicleIntegrationTest {
 
     @BeforeEach
     void beforeEach() {
-        userRepository.deleteAll();
         clientRepository.deleteAll();
         vehicleRepository.deleteAll();
     }
@@ -135,7 +119,7 @@ class VehicleIntegrationTest {
     void shouldCreateVehicle() throws Exception {
         clientRepository.save(client);
 
-        mockMvc.perform(mockPostRequest(vehicleDTO).with(user(setupUser())))
+        mockMvc.perform(mockPostRequest(vehicleDTO))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.licensePlate").value(vehicleDTO.getLicensePlate()))
                 .andExpect(jsonPath("$.year").value(vehicleDTO.getYear()))
@@ -148,7 +132,7 @@ class VehicleIntegrationTest {
     void shouldFindById() throws Exception {
         insertVehicle();
 
-        mockMvc.perform(mockGetRequest(vehicle.getId().toString()).with(user(setupUser())))
+        mockMvc.perform(mockGetRequest(vehicle.getId().toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.licensePlate").value(vehicleDTO.getLicensePlate()))
                 .andExpect(jsonPath("$.year").value(vehicleDTO.getYear()))

@@ -3,11 +3,8 @@ package com.example.Ultracar.integrationTests;
 import com.example.Ultracar.DataLoader;
 import com.example.Ultracar.dtos.GeneralServiceDTO;
 import com.example.Ultracar.entities.GeneralService;
-import com.example.Ultracar.entities.User;
-import com.example.Ultracar.enums.Role;
 import com.example.Ultracar.enums.Situation;
 import com.example.Ultracar.repositories.GeneralServiceRepository;
-import com.example.Ultracar.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,8 +49,6 @@ class GeneralServiceIntegrationTest {
     }
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private GeneralServiceRepository generalServiceRepository;
     @Autowired
     protected MockMvc mockMvc;
@@ -62,11 +57,6 @@ class GeneralServiceIntegrationTest {
     @MockBean
     private DataLoader dataLoader;
 
-    private User user = User.builder()
-            .name("user")
-            .password("password")
-            .role(Role.EMPLOYEE)
-            .build();
     private GeneralService generalService = GeneralService.builder()
             .situation(Situation.COMPLETO)
             .serviceName("serviceName")
@@ -75,11 +65,6 @@ class GeneralServiceIntegrationTest {
             .situation(Situation.COMPLETO)
             .serviceName("serviceName")
             .build();
-
-    private User setupUser() {
-        return userRepository.findByName(user.getName())
-                .orElseGet(() -> userRepository.save(user));
-    }
 
     private void insertGeneralService() {
         generalServiceRepository.save(generalService);
@@ -100,12 +85,11 @@ class GeneralServiceIntegrationTest {
 
     @BeforeEach
     void beforeEach() {
-        userRepository.deleteAll();
         generalServiceRepository.deleteAll();
     }
     @Test
     void shouldCreateObservation() throws Exception {
-        mockMvc.perform(mockPostRequest(generalService).with(user(setupUser())))
+        mockMvc.perform(mockPostRequest(generalService))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.situation").value(generalServiceDTO.getSituation().toString()))
                 .andExpect(jsonPath("$.serviceName").value(generalServiceDTO.getServiceName()));
@@ -117,7 +101,7 @@ class GeneralServiceIntegrationTest {
     void shouldFindAll() throws Exception {
         insertGeneralService();
 
-        mockMvc.perform(mockGetRequest().with(user(setupUser())))
+        mockMvc.perform(mockGetRequest())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].situation").value(generalService.getSituation().toString()))
                 .andExpect(jsonPath("$[0].serviceName").value(generalService.getServiceName()));

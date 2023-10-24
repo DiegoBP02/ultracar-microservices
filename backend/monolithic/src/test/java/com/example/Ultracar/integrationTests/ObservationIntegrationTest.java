@@ -3,11 +3,8 @@ package com.example.Ultracar.integrationTests;
 import com.example.Ultracar.DataLoader;
 import com.example.Ultracar.dtos.ObservationDTO;
 import com.example.Ultracar.entities.Observation;
-import com.example.Ultracar.entities.User;
-import com.example.Ultracar.enums.Role;
 import com.example.Ultracar.enums.Situation;
 import com.example.Ultracar.repositories.ObservationRepository;
-import com.example.Ultracar.repositories.UserRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -52,8 +49,6 @@ class ObservationIntegrationTest {
     }
 
     @Autowired
-    private UserRepository userRepository;
-    @Autowired
     private ObservationRepository observationRepository;
     @Autowired
     protected MockMvc mockMvc;
@@ -62,11 +57,6 @@ class ObservationIntegrationTest {
     @MockBean
     private DataLoader dataLoader;
 
-    private User user = User.builder()
-            .name("user")
-            .password("password")
-            .role(Role.EMPLOYEE)
-            .build();
     private Observation observation = Observation.builder()
             .situation(Situation.COMPLETO)
             .name("name")
@@ -75,11 +65,6 @@ class ObservationIntegrationTest {
             .situation(Situation.COMPLETO)
             .name("name")
             .build();
-
-    private User setupUser() {
-        return userRepository.findByName(user.getName())
-                .orElseGet(() -> userRepository.save(user));
-    }
 
     private void insertObservation() {
         observationRepository.save(observation);
@@ -100,12 +85,11 @@ class ObservationIntegrationTest {
 
     @BeforeEach
     void beforeEach() {
-        userRepository.deleteAll();
         observationRepository.deleteAll();
     }
     @Test
     void shouldCreateObservation() throws Exception {
-        mockMvc.perform(mockPostRequest(observationDTO).with(user(setupUser())))
+        mockMvc.perform(mockPostRequest(observationDTO))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$.situation").value(observationDTO.getSituation().toString()))
                 .andExpect(jsonPath("$.name").value(observationDTO.getName()));
@@ -117,7 +101,7 @@ class ObservationIntegrationTest {
     void shouldFindAll() throws Exception {
         insertObservation();
 
-        mockMvc.perform(mockGetRequest().with(user(setupUser())))
+        mockMvc.perform(mockGetRequest())
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].situation").value(observationDTO.getSituation().toString()))
                 .andExpect(jsonPath("$[0].name").value(observationDTO.getName()));
