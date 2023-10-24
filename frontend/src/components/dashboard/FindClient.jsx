@@ -11,7 +11,7 @@ import {
   Alert,
   AlertIcon,
 } from "@chakra-ui/react";
-import { findClientByCpf } from "../../services/client";
+import { findClientByCpf, getVehiclesByClientCpf } from "../../services/client";
 import * as Yup from "yup";
 import { Form, Formik, useField } from "formik";
 import { errorNotification } from "../../services/notification";
@@ -36,6 +36,7 @@ const MyTextInput = ({ label, ...props }) => {
 
 export default function FindClient() {
   const [client, setClient] = useState(null);
+  const [vehicles, setVehicles] = useState([]);
 
   return (
     <Flex
@@ -79,6 +80,16 @@ export default function FindClient() {
               .finally(() => {
                 setSubmitting(false);
               });
+            getVehiclesByClientCpf(cpf)
+              .then((res) => {
+                setVehicles(res.data);
+              })
+              .catch((err) => {
+                errorNotification(err.code, err.response.data.message);
+              })
+              .finally(() => {
+                setSubmitting(false);
+              });
           }}
         >
           {({ isValid, isSubmitting }) => (
@@ -104,7 +115,7 @@ export default function FindClient() {
           email={client.email}
           phone={client.phone}
           address={client.address}
-          vehicles={client.vehicles}
+          vehicles={vehicles}
         ></ClientCard>
       ) : null}
     </Flex>

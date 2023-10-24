@@ -5,30 +5,33 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="f1f7e957-b122-45f6-8268-a8268c0c06af" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-service/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/client-service/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-service/src/main/java/com/example/clientservice/config/AuthConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-service/src/main/java/com/example/clientservice/entities/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/client-service/src/main/java/com/example/clientservice/entities/Client.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client-service/src/main/java/com/example/clientservice/exceptions/DefaultExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/client-service/src/main/java/com/example/clientservice/exceptions/DefaultExceptionHandler.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gateway/src/main/resources/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gateway/src/main/resources/application.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolithic/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/DataLoader.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/DataLoader.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/controller/ClientController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/controller/OrderOfServiceController.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/controller/OrderOfServiceController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/controller/VehicleController.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/controller/VehicleController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/dtos/ClientDTO.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/dtos/ClientResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/dtos/ClientResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/controller/VehicleController.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/dtos/OrderOfServiceResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/dtos/OrderOfServiceResponse.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/entities/Client.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/dtos/VehicleDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/vehicle-service/src/main/java/com/example/vehicleservice/dtos/VehicleDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/dtos/VehicleResponse.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/dtos/VehicleResponse.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/dtos/VehicleResponseWithClientCpf.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/entities/OrderOfService.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/entities/OrderOfService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/entities/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/entities/Vehicle.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/repositories/ClientRepository.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/repositories/VehicleRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/repositories/VehicleRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/services/ClientService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/entities/Vehicle.java" beforeDir="false" afterPath="$PROJECT_DIR$/vehicle-service/src/main/java/com/example/vehicleservice/entities/Vehicle.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/enums/Accessory.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/exceptions/DefaultExceptionHandler.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/exceptions/DefaultExceptionHandler.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/repositories/VehicleRepository.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/services/OrderOfServiceService.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/services/OrderOfServiceService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/services/VehicleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/services/VehicleService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolithic/src/test/java/com/example/Ultracar/integrationTests/ClientIntegrationTest.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/monolithic/src/main/java/com/example/Ultracar/services/VehicleService.java" beforeDir="false" afterPath="$PROJECT_DIR$/vehicle-service/src/main/java/com/example/vehicleservice/services/VehicleService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/monolithic/src/test/java/com/example/Ultracar/integrationTests/OrderOfServiceIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/test/java/com/example/Ultracar/integrationTests/OrderOfServiceIntegrationTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolithic/src/test/java/com/example/Ultracar/integrationTests/SituationIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/test/java/com/example/Ultracar/integrationTests/SituationIntegrationTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/monolithic/src/test/java/com/example/Ultracar/integrationTests/VehicleIntegrationTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/monolithic/src/test/java/com/example/Ultracar/integrationTests/VehicleIntegrationTest.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/monolithic/src/test/java/com/example/Ultracar/integrationTests/VehicleIntegrationTest.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/dashboard/ClientCard.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/dashboard/ClientCard.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/components/dashboard/FindClient.jsx" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/components/dashboard/FindClient.jsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../frontend/src/services/client.js" beforeDir="false" afterPath="$PROJECT_DIR$/../frontend/src/services/client.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -69,58 +72,32 @@
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "jdk.selected.JAVA_MODULE": "1.8",
-    "last_opened_file_path": "D:/ultracar-microservices/backend/monolithic"
+    "last_opened_file_path": "D:/ultracar-microservices/backend/vehicle-service/src/main/java/com/example/vehicleservice"
   }
 }]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\ultracar-microservices\backend\vehicle-service\src\main\java\com\example\vehicleservice" />
+      <recent name="D:\ultracar-microservices\backend\vehicle-service" />
       <recent name="D:\ultracar-microservices\backend\client-service\src\main\java\com\example\clientservice" />
       <recent name="D:\ultracar-microservices\backend\client-service" />
       <recent name="D:\ultracar-microservices\backend\gateway\src\main\java\com\example\gateway" />
-      <recent name="D:\ultracar-microservices\backend\gateway" />
-      <recent name="D:\ultracar-microservices\backend\authentication-service\src\main\java\com\example\authenticationservice\repository" />
     </key>
     <key name="CopyClassDialog.RECENTS_KEY">
-      <recent name="com.example.clientservice.integrationTests" />
-      <recent name="com.example.clientservice.dtos" />
-      <recent name="com.example.clientservice.controllers" />
-      <recent name="com.example.clientservice.services" />
-      <recent name="com.example.clientservice.repositories" />
+      <recent name="com.example.vehicleservice.integrationTests" />
+      <recent name="com.example.vehicleservice.enums" />
+      <recent name="com.example.vehicleservice.repositories" />
+      <recent name="com.example.vehicleservice.services" />
+      <recent name="com.example.vehicleservice.controllers" />
     </key>
   </component>
-  <component name="RunManager" selected="JUnit.All in client-service">
-    <configuration name="AuthenticationServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.example.authenticationservice.AuthenticationServiceApplication" />
-      <module name="authentication-service" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.example.authenticationservice.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
+  <component name="RunManager" selected="JUnit.integrationTests in vehicle-service">
     <configuration name="ClientServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="com.example.clientservice.ClientServiceApplication" />
       <module name="client-service" />
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.example.clientservice.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
-    <configuration name="EurekaServerApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="com.programming.eurekaserver.EurekaServerApplication" />
-      <module name="eureka-server" />
-      <extension name="coverage">
-        <pattern>
-          <option name="PATTERN" value="com.programming.eurekaserver.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -141,10 +118,38 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
-    <configuration name="All in client-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <module name="client-service" />
-      <option name="PACKAGE_NAME" value="" />
-      <option name="TEST_OBJECT" value="package" />
+    <configuration name="VehicleServiceApplication" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="com.example.vehicleservice.VehicleServiceApplication" />
+      <module name="vehicle-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.vehicleservice.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="VehicleIntegrationTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="vehicle-service" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.example.vehicleservice.integrationTests.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <option name="PACKAGE_NAME" value="com.example.vehicleservice.integrationTests" />
+      <option name="MAIN_CLASS_NAME" value="com.example.vehicleservice.integrationTests.VehicleIntegrationTest" />
+      <option name="TEST_OBJECT" value="class" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="integrationTests in vehicle-service" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
+      <module name="vehicle-service" />
+      <option name="TEST_OBJECT" value="directory" />
+      <dir value="$PROJECT_DIR$/vehicle-service/src/test/java/com/example/vehicleservice/integrationTests" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -170,11 +175,11 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="JUnit.integrationTests in vehicle-service" />
         <item itemvalue="Application.ClientServiceApplication" />
-        <item itemvalue="JUnit.All in client-service" />
-        <item itemvalue="Application.AuthenticationServiceApplication" />
+        <item itemvalue="Application.VehicleServiceApplication" />
         <item itemvalue="Application.GatewayApplication" />
-        <item itemvalue="Application.EurekaServerApplication" />
+        <item itemvalue="JUnit.VehicleIntegrationTest" />
       </list>
     </recent_temporary>
   </component>

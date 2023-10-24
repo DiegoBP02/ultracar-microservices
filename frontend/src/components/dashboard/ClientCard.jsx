@@ -7,7 +7,6 @@ import {
   Stack,
   Tag,
   Text,
-  useColorModeValue,
 } from "@chakra-ui/react";
 import VehicleCard from "./VehicleCard";
 import { useState } from "react";
@@ -30,7 +29,6 @@ export default function ClientCard({
           minW={"300px"}
           w={"full"}
           m={2}
-          bg={useColorModeValue("white", "gray.800")}
           boxShadow={"lg"}
           rounded={"md"}
           overflow={"hidden"}

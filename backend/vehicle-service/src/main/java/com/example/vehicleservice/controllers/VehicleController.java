@@ -1,9 +1,8 @@
-package com.example.Ultracar.controller;
+package com.example.vehicleservice.controllers;
 
-import com.example.Ultracar.dtos.VehicleDTO;
-import com.example.Ultracar.dtos.VehicleResponseWithClientCpf;
-import com.example.Ultracar.entities.Vehicle;
-import com.example.Ultracar.services.VehicleService;
+import com.example.vehicleservice.dtos.VehicleDTO;
+import com.example.vehicleservice.entities.Vehicle;
+import com.example.vehicleservice.services.VehicleService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -41,8 +40,8 @@ public class VehicleController {
 
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<VehicleResponseWithClientCpf> findById(@PathVariable("id") UUID id) {
-        VehicleResponseWithClientCpf vehicle = vehicleService.findByIdWithClientCpf(id);
+    public ResponseEntity<Vehicle> findById(@PathVariable("id") UUID id) {
+        Vehicle vehicle = vehicleService.findById(id);
         return ResponseEntity.ok().body(vehicle);
     }
 

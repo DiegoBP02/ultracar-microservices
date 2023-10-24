@@ -1,8 +1,5 @@
-package com.example.clientservice.exceptions;
+package com.example.vehicleservice.exceptions;
 
-import com.auth0.jwt.exceptions.JWTDecodeException;
-import com.auth0.jwt.exceptions.SignatureVerificationException;
-import com.auth0.jwt.exceptions.TokenExpiredException;
 import jakarta.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +26,17 @@ public class DefaultExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
+    @ExceptionHandler(UniqueConstraintViolationException.class)
+    public ResponseEntity<StandardError> UniqueConstraintViolationException
+            (UniqueConstraintViolationException e, HttpServletRequest request) {
+        String error = "Duplicate entry found. Please provide a unique value";
+        HttpStatus status = HttpStatus.BAD_REQUEST;
+        StandardError err = new StandardError(Instant.now(), status.value(), error,
+                e.getMessage(), request.getRequestURI());
+
+        return ResponseEntity.status(status).body(err);
+    }
+
     @ExceptionHandler(IllegalArgumentException.class)
     public ResponseEntity<StandardError> IllegalArgumentException
             (IllegalArgumentException e, HttpServletRequest request) {
@@ -48,17 +56,6 @@ public class DefaultExceptionHandler {
         HttpStatus status = HttpStatus.NOT_FOUND;
         StandardError err = new StandardError(Instant.now(), status.value(), error,
                 e.getMessage(), request.getRequestURI());
-        return ResponseEntity.status(status).body(err);
-    }
-
-    @ExceptionHandler(UniqueConstraintViolationException.class)
-    public ResponseEntity<StandardError> UniqueConstraintViolationException
-            (UniqueConstraintViolationException e, HttpServletRequest request) {
-        String error = "Duplicate entry found. Please provide a unique value";
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        StandardError err = new StandardError(Instant.now(), status.value(), error,
-                e.getMessage(), request.getRequestURI());
-
         return ResponseEntity.status(status).body(err);
     }
 

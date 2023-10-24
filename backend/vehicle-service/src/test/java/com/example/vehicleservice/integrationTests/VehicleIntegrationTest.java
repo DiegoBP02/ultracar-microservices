@@ -1,10 +1,10 @@
-package com.example.Ultracar.integrationTests;
+package com.example.vehicleservice.integrationTests;
 
-import com.example.Ultracar.DataLoader;
-import com.example.Ultracar.dtos.VehicleDTO;
-import com.example.Ultracar.entities.Vehicle;
-import com.example.Ultracar.enums.Accessory;
-import com.example.Ultracar.repositories.VehicleRepository;
+import com.example.vehicleservice.DataLoader;
+import com.example.vehicleservice.dtos.VehicleDTO;
+import com.example.vehicleservice.entities.Vehicle;
+import com.example.vehicleservice.enums.Accessory;
+import com.example.vehicleservice.repositories.VehicleRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,23 +13,18 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import java.util.Collections;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

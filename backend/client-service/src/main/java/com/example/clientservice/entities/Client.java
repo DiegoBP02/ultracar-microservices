@@ -29,7 +29,4 @@ public class Client {
     private String phone;
     @Column(nullable = false)
     private String address;
-    @ElementCollection
-    @Column(nullable = true, name = "vehicle_ids")
-    private List<UUID> vehicleIds;
 }

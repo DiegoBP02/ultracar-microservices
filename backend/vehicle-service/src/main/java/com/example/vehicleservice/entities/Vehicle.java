@@ -1,7 +1,6 @@
-package com.example.Ultracar.entities;
+package com.example.vehicleservice.entities;
 
-import com.example.Ultracar.enums.Accessory;
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.example.vehicleservice.enums.Accessory;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

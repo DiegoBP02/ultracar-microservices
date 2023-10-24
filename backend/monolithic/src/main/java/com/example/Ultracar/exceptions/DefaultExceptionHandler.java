@@ -31,51 +31,6 @@ public class DefaultExceptionHandler {
         return ResponseEntity.status(status).body(err);
     }
 
-    @ExceptionHandler(UsernameNotFoundException.class)
-    public ResponseEntity<StandardError> UsernameNotFoundException
-            (UsernameNotFoundException e, HttpServletRequest request) {
-        logger.error("Username not found exception occurred:", e);
-        String error = "Username was not found in database";
-        HttpStatus status = HttpStatus.NOT_FOUND;
-        StandardError err = new StandardError(Instant.now(), status.value(), error,
-                e.getMessage(), request.getRequestURI());
-
-        return ResponseEntity.status(status).body(err);
-    }
-
-    @ExceptionHandler(SignatureVerificationException.class)
-    public ResponseEntity<StandardError> SignatureVerificationException
-            (SignatureVerificationException e, HttpServletRequest request) {
-        String error = "Invalid token signature";
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        StandardError err = new StandardError(Instant.now(), status.value(), error,
-                e.getMessage(), request.getRequestURI());
-
-        return ResponseEntity.status(status).body(err);
-    }
-
-    @ExceptionHandler(JWTDecodeException.class)
-    public ResponseEntity<StandardError> JWTDecodeException
-            (JWTDecodeException e, HttpServletRequest request) {
-        String error = "Error decoding JWT token";
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        StandardError err = new StandardError(Instant.now(), status.value(), error,
-                e.getMessage(), request.getRequestURI());
-
-        return ResponseEntity.status(status).body(err);
-    }
-
-    @ExceptionHandler(TokenExpiredException.class)
-    public ResponseEntity<StandardError> TokenExpiredException
-            (TokenExpiredException e, HttpServletRequest request) {
-        String error = "Token expired";
-        HttpStatus status = HttpStatus.BAD_REQUEST;
-        StandardError err = new StandardError(Instant.now(), status.value(), error,
-                e.getMessage(), request.getRequestURI());
-
-        return ResponseEntity.status(status).body(err);
-    }
-
     @ExceptionHandler(UniqueConstraintViolationException.class)
     public ResponseEntity<StandardError> UniqueConstraintViolationException
             (UniqueConstraintViolationException e, HttpServletRequest request) {
@@ -95,17 +50,6 @@ public class DefaultExceptionHandler {
         StandardError err = new StandardError(Instant.now(), status.value(), error,
                 e.getMessage(), request.getRequestURI());
 
-        return ResponseEntity.status(status).body(err);
-    }
-
-    @ExceptionHandler(BadCredentialsException.class)
-    public ResponseEntity<StandardError> BadCredentialsException
-            (BadCredentialsException e, HttpServletRequest request) {
-        logger.error("Bad credentials exception:", e);
-        String error = "Bad credentials";
-        HttpStatus status = HttpStatus.UNAUTHORIZED;
-        StandardError err = new StandardError(Instant.now(), status.value(), error,
-                e.getMessage(), request.getRequestURI());
         return ResponseEntity.status(status).body(err);
     }
 

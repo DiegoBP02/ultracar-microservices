@@ -1,6 +1,6 @@
-package com.example.Ultracar.repositories;
+package com.example.vehicleservice.repositories;
 
-import com.example.Ultracar.entities.Vehicle;
+import com.example.vehicleservice.entities.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

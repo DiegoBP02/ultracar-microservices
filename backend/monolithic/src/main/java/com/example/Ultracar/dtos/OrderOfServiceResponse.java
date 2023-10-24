@@ -27,12 +27,14 @@ public class OrderOfServiceResponse {
     private List<ServiceResponse> observations;
 
     @Builder
-    public OrderOfServiceResponse(OrderOfService orderOfService, ClientResponse clientResponse) {
+    public OrderOfServiceResponse(OrderOfService orderOfService,
+                                  ClientResponse clientResponse,
+                                  VehicleResponse vehicleResponse) {
         this.id= orderOfService.getId();
         this.createdAt = orderOfService.getCreatedAt();
         this.diagnosticId = orderOfService.getDiagnosticId();
         this.clientResponse = clientResponse;
-        this.vehicleResponse = mapVehicleToVehicleResponse(orderOfService.getVehicle());
+        this.vehicleResponse = vehicleResponse;
         this.specificServices = orderOfService.getSpecificServices() != null
                 ? mapEntitiesToServiceResponses(
                         orderOfService.getSpecificServices(),
@@ -60,15 +62,6 @@ public class OrderOfServiceResponse {
         return entities.stream()
                 .map(entity -> new ServiceResponse(nameFunction.apply(entity),
                         situationFunction.apply(entity))).toList();
-    }
-
-    private VehicleResponse mapVehicleToVehicleResponse(Vehicle vehicle) {
-        return VehicleResponse.builder()
-                .model(vehicle.getModel())
-                .year(vehicle.getYear())
-                .licensePlate(vehicle.getLicensePlate())
-                .accessories(vehicle.getAccessories())
-                .build();
     }
 
 }

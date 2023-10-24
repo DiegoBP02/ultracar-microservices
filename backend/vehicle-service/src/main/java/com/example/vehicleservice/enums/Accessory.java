@@ -1,4 +1,4 @@
-package com.example.Ultracar.enums;
+package com.example.vehicleservice.enums;
 
 public enum Accessory {
     AIRBAG,

@@ -1,6 +1,6 @@
-package com.example.Ultracar.dtos;
+package com.example.vehicleservice.dtos;
 
-import com.example.Ultracar.enums.Accessory;
+import com.example.vehicleservice.enums.Accessory;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;

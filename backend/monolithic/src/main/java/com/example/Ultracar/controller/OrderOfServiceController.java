@@ -2,7 +2,6 @@ package com.example.Ultracar.controller;
 
 import com.example.Ultracar.dtos.OrderOfServiceDTO;
 import com.example.Ultracar.dtos.OrderOfServiceResponse;
-import com.example.Ultracar.dtos.VehicleResponseWithClientCpf;
 import com.example.Ultracar.entities.OrderOfService;
 import com.example.Ultracar.services.OrderOfServiceService;
 import jakarta.validation.Valid;
@@ -30,8 +29,8 @@ public class OrderOfServiceController {
 
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<OrderOfService> findById(@PathVariable("id") UUID id) {
-        OrderOfService orderOfService = orderOfServiceService.findById(id);
+    public ResponseEntity<OrderOfServiceResponse> findById(@PathVariable("id") UUID id) {
+        OrderOfServiceResponse orderOfService = orderOfServiceService.findById(id);
         return ResponseEntity.ok().body(orderOfService);
     }
 

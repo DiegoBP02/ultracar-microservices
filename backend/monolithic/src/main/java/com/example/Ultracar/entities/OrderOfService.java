@@ -24,11 +24,10 @@ public class OrderOfService {
     private Instant createdAt;
     @Column(nullable = false)
     private String diagnosticId;
-    @JoinColumn(name = "client_id", nullable = false)
-    private UUID clientId;
-    @ManyToOne
+    @JoinColumn(name = "client_cpf", nullable = false)
+    private String clientCpf;
     @JoinColumn(name = "vehicle_id", nullable = false)
-    private Vehicle vehicle;
+    private UUID vehicleId;
     @ManyToMany
     @JoinTable(
             name = "order_specific_services",

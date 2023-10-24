@@ -32,6 +32,17 @@ export const getVehicleById = async (id) => {
   }
 };
 
+export const getVehiclesByClientCpf = async (cpf) => {
+  try {
+    return await axios.get(
+      `${BASE_URL}/vehicle/clientCpf/${cpf}`,
+      getAuthConfig()
+    );
+  } catch (e) {
+    throw e;
+  }
+};
+
 export const getSituations = async () => {
   try {
     return await axios.get(`${BASE_URL}/situation`, getAuthConfig());
