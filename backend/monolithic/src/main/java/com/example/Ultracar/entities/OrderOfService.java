@@ -28,12 +28,9 @@ public class OrderOfService {
     private String clientCpf;
     @Column(name = "vehicle_id", nullable = false)
     private UUID vehicleId;
-    @ManyToMany
-    @JoinTable(
-            name = "order_specific_services",
-            inverseJoinColumns = @JoinColumn(name = "specific_service_id")
-    )
-    private List<SpecificService> specificServices;
+    @ElementCollection
+    @Column(name = "order_specific_services_ids", nullable = false)
+    private List<UUID> specificServicesIds;
     @ManyToMany
     @JoinTable(
             name = "order_general_services",

@@ -13,14 +13,20 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.DynamicPropertyRegistry;
 import org.springframework.test.context.DynamicPropertySource;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockHttpServletRequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.testcontainers.containers.PostgreSQLContainer;
 import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
+
+import java.util.List;
+import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -82,6 +88,10 @@ class ObservationIntegrationTest {
         return MockMvcRequestBuilders.get(PATH);
     }
 
+    private MockHttpServletRequestBuilder mockGetRequest(String endpoint) {
+        return MockMvcRequestBuilders.get(PATH + "/" + endpoint);
+    }
+
     @BeforeEach
     void beforeEach() {
         observationRepository.deleteAll();
@@ -102,6 +112,17 @@ class ObservationIntegrationTest {
         insertObservation();
 
         mockMvc.perform(mockGetRequest())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].situation").value(observationDTO.getSituation().toString()))
+                .andExpect(jsonPath("$[0].name").value(observationDTO.getName()));
+    }
+
+
+    @Test
+    void shouldFindAllByIdIn() throws Exception {
+        insertObservation();
+
+        mockMvc.perform(mockGetRequest(observation.getId().toString()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].situation").value(observationDTO.getSituation().toString()))
                 .andExpect(jsonPath("$[0].name").value(observationDTO.getName()));

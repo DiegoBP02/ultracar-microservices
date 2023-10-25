@@ -1,8 +1,8 @@
-package com.example.Ultracar.controller;
+package com.example.specificServiceservice.controller;
 
-import com.example.Ultracar.dtos.SpecificServiceDTO;
-import com.example.Ultracar.entities.SpecificService;
-import com.example.Ultracar.services.SpecificServiceService;
+import com.example.specificServiceservice.dtos.SpecificServiceDTO;
+import com.example.specificServiceservice.entities.SpecificService;
+import com.example.specificServiceservice.services.SpecificServiceService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/specificService")
@@ -38,6 +39,12 @@ public class SpecificServiceController {
                 = specificServiceService.findAllSpecificServiceByVehicleModel(vehicleModel);
 
         return ResponseEntity.ok(specificServices);
+    }
+
+    @GetMapping(value = "/ids/{ids}")
+    public ResponseEntity<List<SpecificService>> findAllByIdIn(@PathVariable List<UUID> ids) {
+        List<SpecificService> specificServices = specificServiceService.findAllByIdIn(ids);
+        return ResponseEntity.ok().body(specificServices);
     }
 
 }

@@ -1,41 +1,36 @@
 package com.example.Ultracar.services;
 
-import com.example.Ultracar.dtos.SpecificServiceDTO;
-import com.example.Ultracar.entities.SpecificService;
-import com.example.Ultracar.exceptions.UniqueConstraintViolationException;
-import com.example.Ultracar.repositories.SpecificServiceRepository;
+import com.example.Ultracar.dtos.SpecificServiceResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.stereotype.Service;
+import org.springframework.core.ParameterizedTypeReference;
+import org.springframework.stereotype.Component;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
-@Service
+@Component
 public class SpecificServiceService {
+    private final String SPECIFICSERVICE_SERVICE_URL = "http://SPECIFICSERVICE-SERVICE/specificService";
 
     @Autowired
-    private SpecificServiceRepository specificServiceRepository;
+    private WebClient.Builder webClientBuilder;
 
-    public SpecificService create(SpecificServiceDTO specificServiceDTO) {
-        try {
-            SpecificService specificService = SpecificService.builder()
-                    .serviceName(specificServiceDTO.getServiceName())
-                    .vehicleModel(specificServiceDTO.getVehicleModel())
-                    .situation(specificServiceDTO.getSituation())
-                    .build();
-            return specificServiceRepository.save(specificService);
-        } catch (DataIntegrityViolationException e) {
-            throw new UniqueConstraintViolationException();
-        }
+    public List<SpecificServiceResponse> findAllByIdIn(List<UUID> specificServiceIds) {
+        String specificServiceIdsString = specificServiceIds.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(","));
+
+        String url = UriComponentsBuilder.fromHttpUrl(SPECIFICSERVICE_SERVICE_URL + "/ids/{specificServicesIds}")
+                .buildAndExpand(specificServiceIdsString)
+                .toUriString();
+
+        return webClientBuilder.build().get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<List<SpecificServiceResponse>>() {})
+                .block();
     }
-
-    public List<SpecificService> findAllSpecificServiceByVehicleModel(String vehicleModel) {
-        return specificServiceRepository.findAllByVehicleModel(vehicleModel);
-    }
-
-    public List<SpecificService> findAllByIdIn(List<UUID> ids) {
-        return specificServiceRepository.findAllByIdIn(ids);
-    }
-
 }

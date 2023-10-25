@@ -41,7 +41,8 @@ public class OrderOfServiceService {
     public OrderOfServiceResponse create(OrderOfServiceDTO generalServiceDTO) {
         ClientResponse clientResponse = clientService.findClientByCpf(generalServiceDTO.getClientCpf());
         VehicleResponse vehicleResponse = vehicleService.findById(generalServiceDTO.getVehicleId());
-        List<SpecificService> specificServices = (generalServiceDTO.getSpecificServiceIds() != null)
+        List<SpecificServiceResponse> specificServiceResponses =
+                (generalServiceDTO.getSpecificServiceIds() != null)
                 ? specificServiceService.findAllByIdIn(generalServiceDTO.getSpecificServiceIds())
                 : Collections.emptyList();
         List<GeneralService> generalServices = (generalServiceDTO.getGeneralServiceIds() != null)
@@ -56,7 +57,9 @@ public class OrderOfServiceService {
                     .diagnosticId(randomValue())
                     .clientCpf(clientResponse.getCpf())
                     .vehicleId(vehicleResponse.getId())
-                    .specificServices(specificServices.isEmpty() ? null : specificServices)
+                    .specificServicesIds(specificServiceResponses.isEmpty() ?
+                            null : specificServiceResponses.stream()
+                            .map(SpecificServiceResponse::getId).toList())
                     .generalServices(generalServices.isEmpty() ? null : generalServices)
                     .observationsIds(observationsResponses.isEmpty() ?
                             null : observationsResponses.stream().map(ObservationResponse::getId).toList())
@@ -67,7 +70,8 @@ public class OrderOfServiceService {
                     .orderOfService(orderOfService)
                     .clientResponse(clientResponse)
                     .vehicleResponse(vehicleResponse)
-                    .observationsResponses(observationsResponses)
+                    .observationResponses(observationsResponses)
+                    .specificServiceResponses(specificServiceResponses)
                     .build();
         } catch (DataIntegrityViolationException e) {
             throw new UniqueConstraintViolationException();
@@ -88,12 +92,15 @@ public class OrderOfServiceService {
         VehicleResponse vehicleResponse = vehicleService.findById(orderOfService.getVehicleId());
         List<ObservationResponse> observationsResponses
                 = observationService.findAllByIdIn(orderOfService.getObservationsIds());
+        List<SpecificServiceResponse> specificServiceResponses
+                = specificServiceService.findAllByIdIn(orderOfService.getSpecificServicesIds());
 
         return OrderOfServiceResponse.builder()
                 .orderOfService(orderOfService)
                 .clientResponse(clientResponse)
                 .vehicleResponse(vehicleResponse)
-                .observationsResponses(observationsResponses)
+                .observationResponses(observationsResponses)
+                .specificServiceResponses(specificServiceResponses)
                 .build();
     }
 }

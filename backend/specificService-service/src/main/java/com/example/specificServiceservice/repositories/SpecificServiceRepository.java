@@ -1,6 +1,6 @@
-package com.example.Ultracar.repositories;
+package com.example.specificServiceservice.repositories;
 
-import com.example.Ultracar.entities.SpecificService;
+import com.example.specificServiceservice.entities.SpecificService;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

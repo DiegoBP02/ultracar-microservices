@@ -22,33 +22,29 @@ public class OrderOfServiceResponse {
     private String diagnosticId;
     private ClientResponse clientResponse;
     private VehicleResponse vehicleResponse;
-    private List<ServiceResponse> specificServices;
+    private List<SpecificServiceResponse> specificServiceResponses;
     private List<ServiceResponse> generalServices;
-    private List<ObservationResponse> observationsResponses;
+    private List<ObservationResponse> observationResponses;
 
     @Builder
     public OrderOfServiceResponse(OrderOfService orderOfService,
                                   ClientResponse clientResponse,
                                   VehicleResponse vehicleResponse,
-                                  List<ObservationResponse> observationsResponses) {
+                                  List<ObservationResponse> observationResponses,
+                                  List<SpecificServiceResponse> specificServiceResponses) {
         this.id= orderOfService.getId();
         this.createdAt = orderOfService.getCreatedAt();
         this.diagnosticId = orderOfService.getDiagnosticId();
         this.clientResponse = clientResponse;
         this.vehicleResponse = vehicleResponse;
-        this.specificServices = orderOfService.getSpecificServices() != null
-                ? mapEntitiesToServiceResponses(
-                        orderOfService.getSpecificServices(),
-                        SpecificService::getServiceName,
-                        SpecificService::getSituation)
-                : null;
+        this.specificServiceResponses = specificServiceResponses;
         this.generalServices = orderOfService.getGeneralServices() != null
                 ? mapEntitiesToServiceResponses(
                         orderOfService.getGeneralServices(),
                         GeneralService::getServiceName,
                         GeneralService::getSituation)
                 : null;
-        this.observationsResponses = observationsResponses;
+        this.observationResponses = observationResponses;
     }
 
     public <T> List<ServiceResponse> mapEntitiesToServiceResponses

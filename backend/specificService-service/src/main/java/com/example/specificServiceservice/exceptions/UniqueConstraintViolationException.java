@@ -1,4 +1,4 @@
-package com.example.observationservice.exceptions;
+package com.example.specificServiceservice.exceptions;
 
 public class UniqueConstraintViolationException extends RuntimeException {
     public UniqueConstraintViolationException() {

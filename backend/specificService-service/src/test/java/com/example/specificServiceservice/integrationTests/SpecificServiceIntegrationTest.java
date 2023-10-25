@@ -1,10 +1,10 @@
-package com.example.Ultracar.integrationTests;
+package com.example.specificServiceservice.integrationTests;
 
-import com.example.Ultracar.DataLoader;
-import com.example.Ultracar.dtos.SpecificServiceDTO;
-import com.example.Ultracar.entities.SpecificService;
-import com.example.Ultracar.enums.Situation;
-import com.example.Ultracar.repositories.SpecificServiceRepository;
+import com.example.specificServiceservice.DataLoader;
+import com.example.specificServiceservice.dtos.SpecificServiceDTO;
+import com.example.specificServiceservice.entities.SpecificService;
+import com.example.specificServiceservice.enums.Situation;
+import com.example.specificServiceservice.repositories.SpecificServiceRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,6 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -104,6 +103,16 @@ class SpecificServiceIntegrationTest {
         insertSpecificService();
 
         mockMvc.perform(mockGetRequest(specificService.getVehicleModel()))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].situation").value(specificServiceDTO.getSituation().toString()))
+                .andExpect(jsonPath("$[0].serviceName").value(specificServiceDTO.getServiceName()));
+    }
+
+    @Test
+    void shouldFindAllByIdIn() throws Exception {
+        insertSpecificService();
+
+        mockMvc.perform(mockGetRequest("ids/" + specificService.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].situation").value(specificServiceDTO.getSituation().toString()))
                 .andExpect(jsonPath("$[0].serviceName").value(specificServiceDTO.getServiceName()));
