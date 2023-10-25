@@ -15,6 +15,7 @@
         <module>gateway</module>
         <module>client-service</module>
         <module>vehicle-service</module>
+        <module>observation-service</module>
     </modules>
 
     <properties>

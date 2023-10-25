@@ -1,7 +1,7 @@
-package com.example.Ultracar.integrationTests;
+package com.example.observationservice.integrationTests;
 
-import com.example.Ultracar.DataLoader;
-import com.example.Ultracar.enums.Situation;
+import com.example.observationservice.DataLoader;
+import com.example.observationservice.enums.Situation;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,6 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.hamcrest.Matchers.hasSize;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

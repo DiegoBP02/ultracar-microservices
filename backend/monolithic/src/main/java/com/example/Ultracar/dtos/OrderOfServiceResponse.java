@@ -24,12 +24,13 @@ public class OrderOfServiceResponse {
     private VehicleResponse vehicleResponse;
     private List<ServiceResponse> specificServices;
     private List<ServiceResponse> generalServices;
-    private List<ServiceResponse> observations;
+    private List<ObservationResponse> observationsResponses;
 
     @Builder
     public OrderOfServiceResponse(OrderOfService orderOfService,
                                   ClientResponse clientResponse,
-                                  VehicleResponse vehicleResponse) {
+                                  VehicleResponse vehicleResponse,
+                                  List<ObservationResponse> observationsResponses) {
         this.id= orderOfService.getId();
         this.createdAt = orderOfService.getCreatedAt();
         this.diagnosticId = orderOfService.getDiagnosticId();
@@ -47,12 +48,7 @@ public class OrderOfServiceResponse {
                         GeneralService::getServiceName,
                         GeneralService::getSituation)
                 : null;
-        this.observations = orderOfService.getObservations() != null
-                ? mapEntitiesToServiceResponses(
-                        orderOfService.getObservations(),
-                        Observation::getName,
-                        Observation::getSituation)
-                : null;
+        this.observationsResponses = observationsResponses;
     }
 
     public <T> List<ServiceResponse> mapEntitiesToServiceResponses

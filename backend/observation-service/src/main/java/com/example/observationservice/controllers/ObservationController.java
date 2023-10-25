@@ -1,8 +1,8 @@
-package com.example.Ultracar.controller;
+package com.example.observationservice.controllers;
 
-import com.example.Ultracar.dtos.ObservationDTO;
-import com.example.Ultracar.entities.Observation;
-import com.example.Ultracar.services.ObservationService;
+import com.example.observationservice.dtos.ObservationDTO;
+import com.example.observationservice.entities.Observation;
+import com.example.observationservice.services.ObservationService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -11,6 +11,7 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping(value = "/observation")
@@ -36,4 +37,9 @@ public class ObservationController {
         return ResponseEntity.ok().body(observations);
     }
 
+    @GetMapping(value = "/{ids}")
+    public ResponseEntity<List<Observation>> findAllByIdIn(@PathVariable List<UUID> ids) {
+        List<Observation> observations = observationService.findAllByIdIn(ids);
+        return ResponseEntity.ok().body(observations);
+    }
 }

@@ -1,9 +1,6 @@
 package com.example.Ultracar.services;
 
-import com.example.Ultracar.dtos.ClientResponse;
-import com.example.Ultracar.dtos.OrderOfServiceDTO;
-import com.example.Ultracar.dtos.OrderOfServiceResponse;
-import com.example.Ultracar.dtos.VehicleResponse;
+import com.example.Ultracar.dtos.*;
 import com.example.Ultracar.entities.*;
 import com.example.Ultracar.exceptions.ResourceNotFoundException;
 import com.example.Ultracar.exceptions.UniqueConstraintViolationException;
@@ -50,7 +47,7 @@ public class OrderOfServiceService {
         List<GeneralService> generalServices = (generalServiceDTO.getGeneralServiceIds() != null)
                 ? generalServiceService.findAllByIdIn(generalServiceDTO.getGeneralServiceIds())
                 : Collections.emptyList();
-        List<Observation> observations = (generalServiceDTO.getObservationIds() != null)
+        List<ObservationResponse> observationsResponses = (generalServiceDTO.getObservationIds() != null)
                 ? observationService.findAllByIdIn(generalServiceDTO.getObservationIds())
                 : Collections.emptyList();
         try {
@@ -61,11 +58,17 @@ public class OrderOfServiceService {
                     .vehicleId(vehicleResponse.getId())
                     .specificServices(specificServices.isEmpty() ? null : specificServices)
                     .generalServices(generalServices.isEmpty() ? null : generalServices)
-                    .observations(observations.isEmpty() ? null : observations)
+                    .observationsIds(observationsResponses.isEmpty() ?
+                            null : observationsResponses.stream().map(ObservationResponse::getId).toList())
                     .build();
 
             orderOfServiceRepository.save(orderOfService);
-            return new OrderOfServiceResponse(orderOfService, clientResponse, vehicleResponse);
+            return OrderOfServiceResponse.builder()
+                    .orderOfService(orderOfService)
+                    .clientResponse(clientResponse)
+                    .vehicleResponse(vehicleResponse)
+                    .observationsResponses(observationsResponses)
+                    .build();
         } catch (DataIntegrityViolationException e) {
             throw new UniqueConstraintViolationException();
         }
@@ -83,7 +86,14 @@ public class OrderOfServiceService {
                         ResourceNotFoundException("OrderOfService not found. ID: " + id));
         ClientResponse clientResponse = clientService.findClientByCpf(orderOfService.getClientCpf());
         VehicleResponse vehicleResponse = vehicleService.findById(orderOfService.getVehicleId());
+        List<ObservationResponse> observationsResponses
+                = observationService.findAllByIdIn(orderOfService.getObservationsIds());
 
-        return new OrderOfServiceResponse(orderOfService, clientResponse, vehicleResponse);
+        return OrderOfServiceResponse.builder()
+                .orderOfService(orderOfService)
+                .clientResponse(clientResponse)
+                .vehicleResponse(vehicleResponse)
+                .observationsResponses(observationsResponses)
+                .build();
     }
 }

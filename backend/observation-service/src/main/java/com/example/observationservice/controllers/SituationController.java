@@ -1,6 +1,6 @@
-package com.example.Ultracar.controller;
+package com.example.observationservice.controllers;
 
-import com.example.Ultracar.enums.Situation;
+import com.example.observationservice.enums.Situation;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

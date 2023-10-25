@@ -24,9 +24,9 @@ public class OrderOfService {
     private Instant createdAt;
     @Column(nullable = false)
     private String diagnosticId;
-    @JoinColumn(name = "client_cpf", nullable = false)
+    @Column(name = "client_cpf", nullable = false)
     private String clientCpf;
-    @JoinColumn(name = "vehicle_id", nullable = false)
+    @Column(name = "vehicle_id", nullable = false)
     private UUID vehicleId;
     @ManyToMany
     @JoinTable(
@@ -40,10 +40,7 @@ public class OrderOfService {
             inverseJoinColumns = @JoinColumn(name = "general_service_id")
     )
     private List<GeneralService> generalServices;
-    @ManyToMany
-    @JoinTable(
-            name = "order_observations",
-            inverseJoinColumns = @JoinColumn(name = "observation_id")
-    )
-    private List<Observation> observations;
+    @ElementCollection
+    @Column(name = "order_observations_ids", nullable = false)
+    private List<UUID> observationsIds;
 }

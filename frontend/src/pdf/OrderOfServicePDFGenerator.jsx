@@ -147,29 +147,33 @@ function OrderOfServicePDFGenerator() {
               </div>
               <hr />
               <br />
-              {orderOfService.observations &&
-                orderOfService.observations.length > 0 && (
+              {orderOfService.observationsResponses &&
+                orderOfService.observationsResponses.length > 0 && (
                   <div className="container">
                     <div className="for">
                       <h3>Observações</h3>
                       <p>
-                        {orderOfService.observations.map((obs, index) => (
-                          <span key={index}>
-                            {obs.name}
-                            <br />
-                          </span>
-                        ))}
+                        {orderOfService.observationsResponses.map(
+                          (obs, index) => (
+                            <span key={index}>
+                              {obs.name}
+                              <br />
+                            </span>
+                          )
+                        )}
                       </p>
                     </div>
                     <div className="for">
                       <h3>Situação</h3>
                       <p>
-                        {orderOfService.observations.map((obs, index) => (
-                          <span key={index}>
-                            {obs.situation}
-                            <br />
-                          </span>
-                        ))}
+                        {orderOfService.observationsResponses.map(
+                          (obs, index) => (
+                            <span key={index}>
+                              {obs.situation}
+                              <br />
+                            </span>
+                          )
+                        )}
                       </p>
                     </div>
                   </div>

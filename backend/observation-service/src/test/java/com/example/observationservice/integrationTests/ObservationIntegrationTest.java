@@ -1,10 +1,10 @@
-package com.example.Ultracar.integrationTests;
+package com.example.observationservice.integrationTests;
 
-import com.example.Ultracar.DataLoader;
-import com.example.Ultracar.dtos.ObservationDTO;
-import com.example.Ultracar.entities.Observation;
-import com.example.Ultracar.enums.Situation;
-import com.example.Ultracar.repositories.ObservationRepository;
+import com.example.observationservice.DataLoader;
+import com.example.observationservice.dtos.ObservationDTO;
+import com.example.observationservice.entities.Observation;
+import com.example.observationservice.enums.Situation;
+import com.example.observationservice.repositories.ObservationRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,6 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -94,7 +93,8 @@ class ObservationIntegrationTest {
                 .andExpect(jsonPath("$.situation").value(observationDTO.getSituation().toString()))
                 .andExpect(jsonPath("$.name").value(observationDTO.getName()));
 
-        assertEquals(1, observationRepository.findAll().size());
+        assertEquals
+                (1, observationRepository.findAll().size());
     }
 
     @Test

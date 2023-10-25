@@ -1,39 +1,37 @@
 package com.example.Ultracar.services;
 
-import com.example.Ultracar.dtos.ObservationDTO;
-import com.example.Ultracar.entities.Observation;
-import com.example.Ultracar.exceptions.UniqueConstraintViolationException;
-import com.example.Ultracar.repositories.ObservationRepository;
+import com.example.Ultracar.dtos.ObservationResponse;
+import com.example.Ultracar.dtos.VehicleResponse;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.stereotype.Service;
+import org.springframework.web.reactive.function.client.WebClient;
+import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @Service
 public class ObservationService {
+    private final String OBSERVATION_SERVICE_URL = "http://OBSERVATION-SERVICE/observation";
 
     @Autowired
-    private ObservationRepository observationRepository;
+    private WebClient.Builder webClientBuilder;
 
-    public Observation create(ObservationDTO observationDTO) {
-        try {
-            Observation observation = Observation.builder()
-                    .name(observationDTO.getName())
-                    .situation(observationDTO.getSituation())
-                    .build();
-            return observationRepository.save(observation);
-        } catch (DataIntegrityViolationException e) {
-            throw new UniqueConstraintViolationException();
-        }
-    }
+    public List<ObservationResponse> findAllByIdIn(List<UUID> observationIds) {
+        String observationIdsString = observationIds.stream()
+                .map(Object::toString)
+                .collect(Collectors.joining(","));
 
-    public List<Observation> findAll() {
-        return observationRepository.findAll();
-    }
+        String url = UriComponentsBuilder.fromHttpUrl(OBSERVATION_SERVICE_URL + "/{observationsIds}")
+                .buildAndExpand(observationIdsString)
+                .toUriString();
 
-    public List<Observation> findAllByIdIn(List<UUID> ids) {
-        return observationRepository.findAllByIdIn(ids);
+        return webClientBuilder.build().get()
+                .uri(url)
+                .retrieve()
+                .bodyToMono(new ParameterizedTypeReference<List<ObservationResponse>>() {})
+                .block();
     }
 }

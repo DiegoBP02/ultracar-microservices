@@ -9,9 +9,9 @@
 	</parent>
 
 	<groupId>com.example</groupId>
-	<artifactId>vehicle-service</artifactId>
+	<artifactId>observation-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>vehicle-service</name>
+	<name>observation-service</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>

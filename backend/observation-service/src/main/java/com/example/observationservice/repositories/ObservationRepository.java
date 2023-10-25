@@ -1,6 +1,6 @@
-package com.example.Ultracar.repositories;
+package com.example.observationservice.repositories;
 
-import com.example.Ultracar.entities.Observation;
+import com.example.observationservice.entities.Observation;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
