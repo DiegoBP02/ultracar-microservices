@@ -10,7 +10,6 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>monolithic</module>
         <module>authentication-service</module>
         <module>gateway</module>
         <module>client-service</module>
@@ -18,6 +17,7 @@
         <module>observation-service</module>
         <module>specificService-service</module>
         <module>generalService-service</module>
+        <module>orderOfService-service</module>
     </modules>
 
     <properties>
