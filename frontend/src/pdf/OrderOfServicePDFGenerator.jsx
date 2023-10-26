@@ -213,16 +213,16 @@ function OrderOfServicePDFGenerator() {
                 )}
               <hr />
               <br />
-              {orderOfService.generalServices &&
-                orderOfService.generalServices.length > 0 && (
+              {orderOfService.generalServiceResponses &&
+                orderOfService.generalServiceResponses.length > 0 && (
                   <div className="container">
                     <div className="for">
                       <h3>Serviços Gerais</h3>
                       <p>
-                        {orderOfService.generalServices.map(
+                        {orderOfService.generalServiceResponses.map(
                           (service, index) => (
                             <span key={index}>
-                              {service.name}
+                              {service.serviceName}
                               <br />
                             </span>
                           )
@@ -232,7 +232,7 @@ function OrderOfServicePDFGenerator() {
                     <div className="for">
                       <h3>Situação</h3>
                       <p>
-                        {orderOfService.generalServices.map(
+                        {orderOfService.generalServiceResponses.map(
                           (service, index) => (
                             <span key={index}>
                               {service.situation}

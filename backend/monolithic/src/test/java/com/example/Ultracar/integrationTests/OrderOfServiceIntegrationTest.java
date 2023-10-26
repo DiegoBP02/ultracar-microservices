@@ -1,6 +1,5 @@
 package com.example.Ultracar.integrationTests;
 
-import com.example.Ultracar.DataLoader;
 import com.example.Ultracar.dtos.*;
 import com.example.Ultracar.entities.*;
 import com.example.Ultracar.enums.Situation;
@@ -9,7 +8,6 @@ import com.example.Ultracar.services.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,7 +23,6 @@ import org.testcontainers.junit.jupiter.Container;
 
 import java.time.Instant;
 import java.util.Collections;
-import java.util.List;
 import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -54,15 +51,11 @@ class OrderOfServiceIntegrationTest {
     }
 
     @Autowired
-    private GeneralServiceRepository generalServiceRepository;
-    @Autowired
     private OrderOfServiceRepository orderOfServiceRepository;
     @Autowired
     protected MockMvc mockMvc;
     @Autowired
     protected ObjectMapper objectMapper;
-    @MockBean
-    private DataLoader dataLoader;
     @MockBean
     private ClientService clientService;
     @MockBean
@@ -71,6 +64,8 @@ class OrderOfServiceIntegrationTest {
     private ObservationService observationService;
     @MockBean
     private SpecificServiceService specificServiceService;
+    @MockBean
+    private GeneralServiceService generalServiceService;
 
     private ClientResponse clientResponse = ClientResponse.builder()
             .id(UUID.randomUUID())
@@ -99,7 +94,8 @@ class OrderOfServiceIntegrationTest {
             .serviceName("serviceName")
             .vehicleModel("model")
             .build();
-    private GeneralService generalService = GeneralService.builder()
+    private GeneralServiceResponse generalServiceResponse = GeneralServiceResponse.builder()
+            .id(UUID.randomUUID())
             .situation(Situation.COMPLETO)
             .serviceName("serviceName")
             .build();
@@ -108,17 +104,12 @@ class OrderOfServiceIntegrationTest {
             .clientCpf(clientResponse.getCpf())
             .observationsIds(Collections.singletonList(observationResponse.getId()))
             .specificServicesIds(Collections.singletonList(specificServiceResponse.getId()))
-            .generalServices(Collections.singletonList(generalService))
+            .generalServicesIds(Collections.singletonList(generalServiceResponse.getId()))
             .createdAt(Instant.now())
             .diagnosticId("12345")
             .build();
 
-    private void insertGeneralService() {
-        generalServiceRepository.save(generalService);
-    }
-
     private void insertOrderOfService(){
-        insertGeneralService();
         orderOfServiceRepository.save(orderOfService);
     }
 
@@ -138,26 +129,25 @@ class OrderOfServiceIntegrationTest {
     @BeforeEach
     void beforeEach() {
         orderOfServiceRepository.deleteAll();
-        generalServiceRepository.deleteAll();
     }
 
     @Test
     void shouldCreateOrderOfService() throws Exception {
-        insertGeneralService();
-
         when(clientService.findClientByCpf(clientResponse.getCpf())).thenReturn(clientResponse);
         when(vehicleService.findById(vehicleResponse.getId())).thenReturn(vehicleResponse);
         when(observationService.findAllByIdIn(Collections.singletonList(orderOfService.getId())))
                 .thenReturn(Collections.singletonList(observationResponse));
         when(specificServiceService.findAllByIdIn(Collections.singletonList(specificServiceResponse.getId())))
                 .thenReturn(Collections.singletonList(specificServiceResponse));
+        when(generalServiceService.findAllByIdIn(Collections.singletonList(generalServiceResponse.getId())))
+                .thenReturn(Collections.singletonList(generalServiceResponse));
 
         OrderOfServiceDTO orderOfServiceDTO = OrderOfServiceDTO.builder()
                 .clientCpf(clientResponse.getCpf())
                 .vehicleId(vehicleResponse.getId())
                 .observationIds(Collections.singletonList(observationResponse.getId()))
                 .specificServiceIds(Collections.singletonList(specificServiceResponse.getId()))
-                .generalServiceIds(Collections.singletonList(generalService.getId()))
+                .generalServiceIds(Collections.singletonList(generalServiceResponse.getId()))
                 .build();
 
         mockMvc.perform(mockPostRequest(orderOfServiceDTO))
@@ -176,6 +166,8 @@ class OrderOfServiceIntegrationTest {
                 .thenReturn(Collections.singletonList(observationResponse));
         when(specificServiceService.findAllByIdIn(Collections.singletonList(specificServiceResponse.getId())))
                 .thenReturn(Collections.singletonList(specificServiceResponse));
+        when(generalServiceService.findAllByIdIn(Collections.singletonList(generalServiceResponse.getId())))
+                .thenReturn(Collections.singletonList(generalServiceResponse));
 
         mockMvc.perform(mockGetRequest(orderOfService.getId().toString()))
                 .andExpect(status().isOk())
@@ -183,9 +175,12 @@ class OrderOfServiceIntegrationTest {
                 .andExpect(jsonPath("$.diagnosticId").value(orderOfService.getDiagnosticId()))
                 .andExpect(jsonPath("$.clientResponse.id").isString())
                 .andExpect(jsonPath("$.vehicleResponse.id").isString())
-                .andExpect(jsonPath("$.observationResponses[0].id").value(observationResponse.getId().toString()))
-                .andExpect(jsonPath("$.specificServiceResponses[0].id").value(specificServiceResponse.getId().toString()))
-                .andExpect(jsonPath("$.generalServices[0].name").value(generalService.getServiceName()));
+                .andExpect(jsonPath("$.observationResponses[0].id")
+                        .value(observationResponse.getId().toString()))
+                .andExpect(jsonPath("$.specificServiceResponses[0].id")
+                        .value(specificServiceResponse.getId().toString()))
+                .andExpect(jsonPath("$.generalServiceResponses[0].id")
+                        .value(generalServiceResponse.getId().toString()));
     }
 
 }

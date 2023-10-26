@@ -9,6 +9,8 @@
     <file url="file://$PROJECT_DIR$/eureka-server/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gateway/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/gateway/src/main/resources" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/generalService-service/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/generalService-service/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/monolithic/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/monolithic/src/main/resources" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/observation-service/src/main/java" charset="UTF-8" />

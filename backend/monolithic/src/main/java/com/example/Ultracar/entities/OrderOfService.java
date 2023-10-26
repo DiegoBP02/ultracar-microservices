@@ -31,12 +31,9 @@ public class OrderOfService {
     @ElementCollection
     @Column(name = "order_specific_services_ids", nullable = false)
     private List<UUID> specificServicesIds;
-    @ManyToMany
-    @JoinTable(
-            name = "order_general_services",
-            inverseJoinColumns = @JoinColumn(name = "general_service_id")
-    )
-    private List<GeneralService> generalServices;
+    @ElementCollection
+    @Column(name = "order_general_services_ids", nullable = false)
+    private List<UUID> generalServicesIds;
     @ElementCollection
     @Column(name = "order_observations_ids", nullable = false)
     private List<UUID> observationsIds;

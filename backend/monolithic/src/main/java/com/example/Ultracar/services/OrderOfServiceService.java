@@ -45,7 +45,8 @@ public class OrderOfServiceService {
                 (generalServiceDTO.getSpecificServiceIds() != null)
                 ? specificServiceService.findAllByIdIn(generalServiceDTO.getSpecificServiceIds())
                 : Collections.emptyList();
-        List<GeneralService> generalServices = (generalServiceDTO.getGeneralServiceIds() != null)
+        List<GeneralServiceResponse> generalServiceResponses =
+                (generalServiceDTO.getGeneralServiceIds() != null)
                 ? generalServiceService.findAllByIdIn(generalServiceDTO.getGeneralServiceIds())
                 : Collections.emptyList();
         List<ObservationResponse> observationsResponses = (generalServiceDTO.getObservationIds() != null)
@@ -60,7 +61,9 @@ public class OrderOfServiceService {
                     .specificServicesIds(specificServiceResponses.isEmpty() ?
                             null : specificServiceResponses.stream()
                             .map(SpecificServiceResponse::getId).toList())
-                    .generalServices(generalServices.isEmpty() ? null : generalServices)
+                    .generalServicesIds(generalServiceResponses.isEmpty() ?
+                            null : generalServiceResponses.stream()
+                            .map(GeneralServiceResponse::getId).toList())
                     .observationsIds(observationsResponses.isEmpty() ?
                             null : observationsResponses.stream().map(ObservationResponse::getId).toList())
                     .build();
@@ -72,6 +75,7 @@ public class OrderOfServiceService {
                     .vehicleResponse(vehicleResponse)
                     .observationResponses(observationsResponses)
                     .specificServiceResponses(specificServiceResponses)
+                    .generalServiceResponses(generalServiceResponses)
                     .build();
         } catch (DataIntegrityViolationException e) {
             throw new UniqueConstraintViolationException();
@@ -94,6 +98,8 @@ public class OrderOfServiceService {
                 = observationService.findAllByIdIn(orderOfService.getObservationsIds());
         List<SpecificServiceResponse> specificServiceResponses
                 = specificServiceService.findAllByIdIn(orderOfService.getSpecificServicesIds());
+        List<GeneralServiceResponse> generalServiceResponses
+                = generalServiceService.findAllByIdIn(orderOfService.getGeneralServicesIds());
 
         return OrderOfServiceResponse.builder()
                 .orderOfService(orderOfService)
@@ -101,6 +107,7 @@ public class OrderOfServiceService {
                 .vehicleResponse(vehicleResponse)
                 .observationResponses(observationsResponses)
                 .specificServiceResponses(specificServiceResponses)
+                .generalServiceResponses(generalServiceResponses)
                 .build();
     }
 }

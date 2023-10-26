@@ -1,8 +1,8 @@
-package com.example.Ultracar;
+package com.example.generalServiceservice;
 
-import com.example.Ultracar.entities.*;
-import com.example.Ultracar.enums.Situation;
-import com.example.Ultracar.repositories.*;
+import com.example.generalServiceservice.entities.GeneralService;
+import com.example.generalServiceservice.enums.Situation;
+import com.example.generalServiceservice.repositories.GeneralServiceRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;

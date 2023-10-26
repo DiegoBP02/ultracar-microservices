@@ -1,6 +1,6 @@
-package com.example.Ultracar.entities;
+package com.example.generalServiceservice.entities;
 
-import com.example.Ultracar.enums.Situation;
+import com.example.generalServiceservice.enums.Situation;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

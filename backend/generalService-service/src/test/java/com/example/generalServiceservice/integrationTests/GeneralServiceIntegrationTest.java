@@ -1,10 +1,10 @@
-package com.example.Ultracar.integrationTests;
+package com.example.generalServiceservice.integrationTests;
 
-import com.example.Ultracar.DataLoader;
-import com.example.Ultracar.dtos.GeneralServiceDTO;
-import com.example.Ultracar.entities.GeneralService;
-import com.example.Ultracar.enums.Situation;
-import com.example.Ultracar.repositories.GeneralServiceRepository;
+import com.example.generalServiceservice.DataLoader;
+import com.example.generalServiceservice.dtos.GeneralServiceDTO;
+import com.example.generalServiceservice.entities.GeneralService;
+import com.example.generalServiceservice.enums.Situation;
+import com.example.generalServiceservice.repositories.GeneralServiceRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -23,7 +23,6 @@ import org.testcontainers.junit.jupiter.Container;
 import org.testcontainers.junit.jupiter.Testcontainers;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -83,6 +82,10 @@ class GeneralServiceIntegrationTest {
         return MockMvcRequestBuilders.get(PATH);
     }
 
+    private MockHttpServletRequestBuilder mockGetRequest(String endpoint) {
+        return MockMvcRequestBuilders.get(PATH + "/" + endpoint);
+    }
+
     @BeforeEach
     void beforeEach() {
         generalServiceRepository.deleteAll();
@@ -102,6 +105,16 @@ class GeneralServiceIntegrationTest {
         insertGeneralService();
 
         mockMvc.perform(mockGetRequest())
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$[0].situation").value(generalService.getSituation().toString()))
+                .andExpect(jsonPath("$[0].serviceName").value(generalService.getServiceName()));
+    }
+
+    @Test
+    void shouldFindAllByIdIn() throws Exception {
+        insertGeneralService();
+
+        mockMvc.perform(mockGetRequest("ids/" + generalService.getId()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].situation").value(generalService.getSituation().toString()))
                 .andExpect(jsonPath("$[0].serviceName").value(generalService.getServiceName()));

@@ -23,7 +23,7 @@ public class OrderOfServiceResponse {
     private ClientResponse clientResponse;
     private VehicleResponse vehicleResponse;
     private List<SpecificServiceResponse> specificServiceResponses;
-    private List<ServiceResponse> generalServices;
+    private List<GeneralServiceResponse> generalServiceResponses;
     private List<ObservationResponse> observationResponses;
 
     @Builder
@@ -31,29 +31,16 @@ public class OrderOfServiceResponse {
                                   ClientResponse clientResponse,
                                   VehicleResponse vehicleResponse,
                                   List<ObservationResponse> observationResponses,
-                                  List<SpecificServiceResponse> specificServiceResponses) {
+                                  List<SpecificServiceResponse> specificServiceResponses,
+                                  List<GeneralServiceResponse> generalServiceResponses) {
         this.id= orderOfService.getId();
         this.createdAt = orderOfService.getCreatedAt();
         this.diagnosticId = orderOfService.getDiagnosticId();
         this.clientResponse = clientResponse;
         this.vehicleResponse = vehicleResponse;
         this.specificServiceResponses = specificServiceResponses;
-        this.generalServices = orderOfService.getGeneralServices() != null
-                ? mapEntitiesToServiceResponses(
-                        orderOfService.getGeneralServices(),
-                        GeneralService::getServiceName,
-                        GeneralService::getSituation)
-                : null;
+        this.generalServiceResponses = generalServiceResponses;
         this.observationResponses = observationResponses;
-    }
-
-    public <T> List<ServiceResponse> mapEntitiesToServiceResponses
-            (List<T> entities,
-             Function<T, String> nameFunction,
-             Function<T, Situation> situationFunction) {
-        return entities.stream()
-                .map(entity -> new ServiceResponse(nameFunction.apply(entity),
-                        situationFunction.apply(entity))).toList();
     }
 
 }

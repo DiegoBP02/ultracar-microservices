@@ -17,6 +17,7 @@
         <module>vehicle-service</module>
         <module>observation-service</module>
         <module>specificService-service</module>
+        <module>generalService-service</module>
     </modules>
 
     <properties>
